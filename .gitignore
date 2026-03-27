@@ -1,0 +1,32 @@
+# Environment & secrets
+.env
+
+# Database
+*.db
+*.sqlite
+
+# Uploaded files (never commit)
+uploads/
+uploads/certificates/
+static/qr/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

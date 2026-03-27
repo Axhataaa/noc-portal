@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block title %}All Applications{% endblock %}
+{% block breadcrumb %}All Applications{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">All Applications</h1>
+        <p class="page-sub">System-wide view of every internship application</p>
+    </div>
+    <a href="{{ url_for('admin.export_csv') }}" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Export CSV
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Applications</h2>
+        <span class="badge-count">{{ applications|length }}</span>
+    </div>
+
+    <form method="GET" action="{{ url_for('admin.applications') }}" class="filter-bar">
+        <div class="search-box" style="flex:1;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input type="text" name="search" id="admin-search-input" value="{{ search }}"
+                   placeholder="Search by student, company or role..." class="search-input" autocomplete="off">
+        </div>
+        <div class="filter-group" style="flex-shrink:0;">
+            <select name="status" class="form-input filter-select" onchange="this.form.submit()">
+                <option value="">All Status</option>
+                <option value="Pending"  {% if status_filter == 'Pending'  %}selected{% endif %}>⏳ Pending</option>
+                <option value="Approved" {% if status_filter == 'Approved' %}selected{% endif %}>✓ Approved</option>
+                <option value="Rejected" {% if status_filter == 'Rejected' %}selected{% endif %}>✕ Rejected</option>
+            </select>
+            <select name="department" class="form-input filter-select" onchange="this.form.submit()">
+                <option value="">All Departments</option>
+                {% for dept in departments %}
+                <option value="{{ dept }}" {% if dept_filter == dept %}selected{% endif %}>{{ dept }}</option>
+                {% endfor %}
+            </select>
+            {% if search or status_filter or dept_filter %}
+            <a href="{{ url_for('admin.applications') }}" class="btn-outline btn-sm">Clear</a>
+            {% endif %}
+        </div>
+    </form>
+
+    {% if applications %}
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th>Department</th>
+                    <th class="hidden-sm">Branch</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Docs</th>
+                    <th>Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr class="table-row">
+                    <td class="td-id">#{{ app.id }}</td>
+                    <td>
+                        <div class="company-cell">
+                            <div class="company-avatar">{{ app.student_name[0].upper() if app.student_name else '?' }}</div>
+                            <div>
+                                <div class="company-name">{{ app.student_name or '—' }}</div>
+                                <div class="company-location">{{ app.student_enrollment or '' }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="dept-tag">{{ app.department }}</span></td>
+                    <td class="hidden-sm" style="font-size:0.78rem;color:var(--text-secondary);">{{ branch_short(app.branch) if app.branch else '—' }}</td>
+                    <td>{{ app.company_name }}</td>
+                    <td>{{ app.internship_role }}</td>
+                    <td>{{ app.duration_display }}</td>
+                    <td>
+                        <span class="status-chip {{ app.status.lower() }}">
+                            {% if app.status == 'Approved' %}✓ {% elif app.status == 'Rejected' %}✕ {% else %}⏳ {% endif %}
+                            {{ app.status }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if app.offer_letter_path %}
+                        <a href="{{ url_for('admin.download_offer_letter', app_id=app.id) }}"
+                           title="Download Offer Letter"
+                           style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(34,197,94,0.12);color:var(--color-approved);border:1px solid rgba(34,197,94,0.2);transition:all 0.15s;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        </a>
+                        {% else %}
+                        <span style="font-size:0.7rem;color:var(--text-muted);">—</span>
+                        {% endif %}
+                    </td>
+                    <td class="date-cell">{{ app.created_at_fmt }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if total_pages > 1 %}
+    <div class="pagination">
+        <span class="pagination-info">Showing {{ applications|length }} of {{ total_results }} applications</span>
+        <div class="pagination-btns">
+            {% if page > 1 %}
+            <a href="?page={{ page-1 }}&search={{ search }}&status={{ status_filter }}&department={{ dept_filter }}" class="pg-btn">← Prev</a>
+            {% endif %}
+            {% for p in range(1, total_pages + 1) %}
+            <a href="?page={{ p }}&search={{ search }}&status={{ status_filter }}&department={{ dept_filter }}"
+               class="pg-btn {% if p == page %}pg-active{% endif %}">{{ p }}</a>
+            {% endfor %}
+            {% if page < total_pages %}
+            <a href="?page={{ page+1 }}&search={{ search }}&status={{ status_filter }}&department={{ dept_filter }}" class="pg-btn">Next →</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>No Applications Found</h3>
+        <p>{% if search or status_filter or dept_filter %}No results match your filters.{% else %}No applications in the system yet.{% endif %}</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+(function(){
+    var input = document.getElementById('admin-search-input');
+    if (!input) return;
+    var timer;
+    input.addEventListener('input', function(){
+        clearTimeout(timer);
+        timer = setTimeout(function(){ input.closest('form').submit(); }, 400);
+    });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block title %}Admin Analytics{% endblock %}
+{% block breadcrumb %}Analytics Dashboard{% endblock %}
+
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">System Analytics</h1>
+        <p class="page-sub">Real-time insights across all departments and applications</p>
+    </div>
+    <a href="{{ url_for('admin.export_csv') }}" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Export CSV
+    </a>
+</div>
+
+<!-- KPI Stats -->
+<div class="stats-grid stats-6">
+    <div class="stat-card">
+        <div class="stat-icon total">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ stats.total }}</span>
+            <span class="stat-label">Total Applications</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon pending">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value pending-text">{{ stats.pending }}</span>
+            <span class="stat-label">Pending</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon approved">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value approved-text">{{ stats.approved }}</span>
+            <span class="stat-label">Approved</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon rejected">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/><line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value rejected-text">{{ stats.rejected }}</span>
+            <span class="stat-label">Rejected</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon total">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ stats.students }}</span>
+            <span class="stat-label">Students</span>
+        </div>
+    </div>
+    <div class="stat-card" title="Of all reviewed (approved + rejected) applications, what % were approved. Pending applications are excluded.">
+        <div class="stat-icon approved">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value approved-text">{{ stats.approval_rate }}%</span>
+            <span class="stat-label">Approval Rate <span style="font-size:0.65rem;opacity:0.6;">(of reviewed)</span></span>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="charts-grid">
+    <!-- Donut Chart -->
+    <div class="card chart-card">
+        <div class="card-header">
+            <h3 class="card-title">Status Breakdown</h3>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="statusDonut"></canvas>
+        </div>
+        <div class="chart-legend">
+            <div class="legend-item">
+                <span class="legend-dot approved"></span>
+                <span>Approved ({{ stats.approved }})</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot pending"></span>
+                <span>Pending ({{ stats.pending }})</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot rejected"></span>
+                <span>Rejected ({{ stats.rejected }})</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monthly Trend -->
+    <div class="card chart-card chart-large">
+        <div class="card-header">
+            <h3 class="card-title">Monthly Submissions (Last 6 Months)</h3>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="monthlyBar"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Department Table + Top Companies -->
+<div class="analytics-grid">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Department Breakdown</h3>
+        </div>
+        {% if dept_stats %}
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Total</th>
+                        <th>Approved</th>
+                        <th>Rejected</th>
+                        <th>Pending</th>
+                        <th>Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dept in dept_stats %}
+                    <tr class="table-row">
+                        <td><strong>{{ dept.department or 'N/A' }}</strong></td>
+                        <td>{{ dept.total }}</td>
+                        <td><span class="mini-badge approved">{{ dept.approved }}</span></td>
+                        <td><span class="mini-badge rejected">{{ dept.rejected }}</span></td>
+                        <td><span class="mini-badge pending">{{ dept.pending }}</span></td>
+                        <td>
+                            {% if dept.total > 0 %}
+                            <div class="progress-bar-wrap">
+                                <div class="progress-bar-fill" style="width: {{ (dept.approved / dept.total * 100)|int }}%"></div>
+                                <span>{{ (dept.approved / dept.total * 100)|int }}%</span>
+                            </div>
+                            {% else %}—{% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state-sm">No department data yet.</div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Top Companies</h3>
+        </div>
+        <div class="top-companies">
+            {% for company, count in top_companies %}
+            <div class="company-rank-item">
+                <div class="rank-num">{{ loop.index }}</div>
+                <div class="rank-info">
+                    <div class="company-avatar">{{ company[0] }}</div>
+                    <span>{{ company }}</span>
+                </div>
+                <div class="rank-count">{{ count }} app{{ 's' if count != 1 }}</div>
+            </div>
+            {% else %}
+            <div class="empty-state-sm">No company data yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Recent Applications -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Recent Applications</h3>
+        <a href="{{ url_for('admin.applications') }}" class="btn-sm btn-outline">View All</a>
+    </div>
+    {% if recent_apps %}
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th>Department</th>
+                    <th class="hidden-sm">Branch</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th class="hidden-sm">Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in recent_apps %}
+                <tr class="table-row">
+                    <td class="td-id">#{{ app.id }}</td>
+                    <td>{{ app.student_name or '—' }}</td>
+                    <td><span class="dept-tag">{{ app.department }}</span></td>
+                    <td class="hidden-sm" style="font-size:0.78rem;color:var(--text-secondary);">{{ branch_short(app.branch) if app.branch else '—' }}</td>
+                    <td>{{ app.company_name }}</td>
+                    <td><span class="status-chip {{ app.status.lower() }}">{{ app.status }}</span></td>
+                    <td class="date-cell hidden-sm">{{ app.created_at_fmt }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Audit Log -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Recent Audit Log</h3>
+    </div>
+    <div class="audit-log">
+        {% for log in audit_logs %}
+        <div class="audit-item">
+            <div class="audit-dot action-{{ log.action.lower() }}"></div>
+            <div class="audit-content">
+                <div class="audit-action">
+                    <strong>{{ log.action }}</strong>
+                    {% if log.user %}<span>by {{ log.user.name }}</span>{% endif %}
+                    {% if log.details %}<span class="audit-details">— {{ log.details }}</span>{% endif %}
+                </div>
+                <div class="audit-time">{{ log.timestamp_fmt }}</div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-state-sm">No audit logs yet.</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+const textColor = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)';
+const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+Chart.defaults.color = textColor;
+Chart.defaults.font.family = 'DM Sans, sans-serif';
+
+// Donut chart
+const donutCtx = document.getElementById('statusDonut').getContext('2d');
+new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Approved', 'Pending', 'Rejected'],
+        datasets: [{
+            data: [{{ stats.approved }}, {{ stats.pending }}, {{ stats.rejected }}],
+            backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
+            borderColor: 'transparent',
+            borderWidth: 0,
+            hoverOffset: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '72%',
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: ctx => ` ${ctx.label}: ${ctx.raw} (${Math.round(ctx.raw/{{ stats.total if stats.total > 0 else 1 }}*100)}%)`
+                }
+            }
+        }
+    }
+});
+
+// Monthly bar chart
+const monthlyCtx = document.getElementById('monthlyBar').getContext('2d');
+const monthlyLabels = {{ monthly_data | map(attribute='month') | list | tojson }};
+const monthlyCounts = {{ monthly_data | map(attribute='count') | list | tojson }};
+
+new Chart(monthlyCtx, {
+    type: 'bar',
+    data: {
+        labels: monthlyLabels,
+        datasets: [{
+            label: 'Applications',
+            data: monthlyCounts,
+            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+            borderColor: 'rgba(59, 130, 246, 1)',
+            borderWidth: 1,
+            borderRadius: 6,
+            borderSkipped: false
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { color: gridColor }, border: { display: false } },
+            y: {
+                grid: { color: gridColor },
+                border: { display: false },
+                ticks: { stepSize: 1 }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

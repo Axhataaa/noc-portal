@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% block title %}HOD Dashboard{% endblock %}
+{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- Welcome Banner -->
+<div class="welcome-banner">
+    <div class="wb-left">
+        <div class="wb-avatar">{{ current_user.name[0].upper() }}</div>
+        <div>
+            <h1 class="wb-name">{{ current_user.name }}</h1>
+            <p class="wb-sub">Head of Department &nbsp;·&nbsp; {{ department }}</p>
+        </div>
+    </div>
+    {% if stats.pending > 0 %}
+    <span class="alert-badge">{{ stats.pending }} Pending Review{% if stats.pending != 1 %}s{% endif %}</span>
+    {% endif %}
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon total">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ stats.total }}</span>
+            <span class="stat-label">Total Received</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon pending">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value pending-text">{{ stats.pending }}</span>
+            <span class="stat-label">Awaiting Review</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon approved">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value approved-text">{{ stats.approved }}</span>
+            <span class="stat-label">Approved</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon rejected">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/><line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value rejected-text">{{ stats.rejected }}</span>
+            <span class="stat-label">Rejected</span>
+        </div>
+    </div>
+</div>
+
+<!-- Applications Table -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Applications</h2>
+        <span class="badge-count">{{ applications|length }}</span>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="hod-filter-bar">
+        <form method="GET" action="{{ url_for('hod.dashboard') }}" class="hod-filter-form">
+            <div class="search-box">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <input type="text" name="search" id="hod-search-input" value="{{ search }}"
+                       placeholder="Search by student name, company or role…" class="search-input"
+                       autocomplete="off">
+            </div>
+            <select name="status" class="form-input filter-select" onchange="this.form.submit()">
+                <option value="">All Applications</option>
+                <option value="Pending"  {% if status_filter == 'Pending'  %}selected{% endif %}>⏳  Pending</option>
+                <option value="Approved" {% if status_filter == 'Approved' %}selected{% endif %}>✓  Approved</option>
+                <option value="Rejected" {% if status_filter == 'Rejected' %}selected{% endif %}>✕  Rejected</option>
+            </select>
+            {% if search or status_filter %}
+            <a href="{{ url_for('hod.dashboard') }}" class="btn-outline btn-sm">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+
+    {% if applications %}
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th class="hidden-sm">Branch</th>
+                    <th>Company & Role</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Submitted</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr class="table-row">
+                    <td class="td-id">#{{ app.id }}</td>
+                    <td>
+                        <div class="company-cell">
+                            <div class="company-avatar">{{ app.student_name[0] }}</div>
+                            <div>
+                                <div class="company-name">{{ app.student_name }}</div>
+                                <div class="company-location">{{ app.student_enrollment or department }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="hidden-sm" style="font-size:0.78rem;color:var(--text-secondary);">{{ branch_short(app.branch) if app.branch else '—' }}</td>
+                    <td>
+                        <div class="company-name">{{ app.company_name }}</div>
+                        <div class="company-location">{{ app.internship_role }}</div>
+                    </td>
+                    <td>{{ app.duration_display }}</td>
+                    <td>
+                        <span class="status-chip {{ app.status.lower() }}">
+                            {% if app.status == 'Approved' %}✓ {% elif app.status == 'Rejected' %}✕ {% else %}⏳ {% endif %}{{ app.status }}
+                        </span>
+                    </td>
+                    <td class="date-cell">{{ app.created_at_fmt }}</td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="{{ url_for('hod.view_app', app_id=app.id) }}" class="btn-icon" title="View">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                            </a>
+                            {% if app.status == 'Pending' %}
+                            <button onclick="showApproveModal({{ app.id }}, '{{ app.student_name }}', '{{ app.company_name }}')"
+                                    class="btn-icon approve" title="Approve">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            </button>
+                            <button onclick="showRejectModal({{ app.id }}, '{{ app.student_name }}', '{{ app.company_name }}')"
+                                    class="btn-icon danger" title="Reject">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            </button>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if total_pages > 1 %}
+    <div class="pagination">
+        <span class="pagination-info">Showing {{ applications|length }} of {{ total_results }} applications</span>
+        <div class="pagination-btns">
+            {% if page > 1 %}
+            <a href="?page={{ page - 1 }}&search={{ search }}&status={{ status_filter }}" class="pg-btn">← Prev</a>
+            {% endif %}
+            {% for p in range(1, total_pages + 1) %}
+            <a href="?page={{ p }}&search={{ search }}&status={{ status_filter }}"
+               class="pg-btn {% if p == page %}pg-active{% endif %}">{{ p }}</a>
+            {% endfor %}
+            {% if page < total_pages %}
+            <a href="?page={{ page + 1 }}&search={{ search }}&status={{ status_filter }}" class="pg-btn">Next →</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>{% if search or status_filter %}No Matching Applications{% else %}No Applications Yet{% endif %}</h3>
+        <p>{% if search or status_filter %}Try adjusting your search or filter.{% else %}No students have submitted applications yet.{% endif %}</p>
+        {% if search or status_filter %}
+        <a href="{{ url_for('hod.dashboard') }}" class="btn-outline">Clear Filters</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Hidden forms -->
+{% for app in applications %}{% if app.status == 'Pending' %}
+<form id="approve-form-{{ app.id }}" method="POST" action="{{ url_for('hod.approve', app_id=app.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="remarks" id="approve-remarks-{{ app.id }}">
+</form>
+<form id="reject-form-{{ app.id }}" method="POST" action="{{ url_for('hod.reject', app_id=app.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="remarks" id="reject-remarks-{{ app.id }}">
+</form>
+{% endif %}{% endfor %}
+
+<style>
+.welcome-banner {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
+    margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;
+}
+.wb-left { display: flex; align-items: center; gap: 1rem; }
+.wb-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--grad-accent); color: #fff;
+    font-size: 1.3rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; flex-shrink: 0;
+}
+.wb-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem; }
+.wb-sub  { font-size: 0.8rem; color: var(--text-secondary); }
+
+.hod-filter-bar {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.hod-filter-form {
+    display: flex; align-items: center; gap: 0.65rem;
+    width: 100%; flex-wrap: wrap;
+}
+.hod-filter-form .search-box { flex: 2; min-width: 200px; }
+.hod-filter-form .filter-select { flex: 1; min-width: 130px; max-width: 190px; padding: 0.52rem 0.85rem !important; }
+.hod-filter-form .btn-primary,
+.hod-filter-form .btn-outline { flex-shrink: 0; }
+@media (max-width: 600px) {
+    .hod-filter-form { flex-direction: column; }
+    .hod-filter-form .search-box,
+    .hod-filter-form .filter-select { width: 100%; max-width: none; }
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Auto-submit search input after user stops typing (400ms debounce)
+(function() {
+    var input = document.getElementById('hod-search-input');
+    if (!input) return;
+    var timer;
+    input.addEventListener('input', function() {
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            input.closest('form').submit();
+        }, 400);
+    });
+})();
+
+function showApproveModal(appId, student, company) {
+    openModal('Approve Application',
+        `<p>Approve internship for <strong>${student}</strong> at <strong>${company}</strong>?</p>
+         <div class="form-group" style="margin-top:1rem;">
+            <label>Remarks <span style="color:var(--text-muted);font-size:0.75rem;">(optional)</span></label>
+            <textarea id="approve-input" class="form-input form-textarea" rows="3" placeholder="Add a note for the student…"></textarea>
+         </div>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-approve" onclick="submitApprove(${appId})">Approve</button>`
+    );
+}
+function showRejectModal(appId, student, company) {
+    openModal('Reject Application',
+        `<p>Reject internship application for <strong>${student}</strong> at <strong>${company}</strong>?</p>
+         <div class="form-group" style="margin-top:1rem;">
+            <label>Reason for Rejection <span style="color:var(--color-rejected);">*</span></label>
+            <textarea id="reject-input" class="form-input form-textarea" rows="3" placeholder="Provide a reason (required)…"></textarea>
+         </div>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-danger" onclick="submitReject(${appId})">Reject</button>`
+    );
+}
+function submitApprove(id) {
+    document.getElementById(`approve-remarks-${id}`).value = document.getElementById('approve-input').value;
+    document.getElementById(`approve-form-${id}`).submit();
+}
+function submitReject(id) {
+    const remarks = document.getElementById('reject-input').value.trim();
+    if (!remarks) { document.getElementById('reject-input').style.borderColor = 'var(--color-rejected)'; return; }
+    document.getElementById(`reject-remarks-${id}`).value = remarks;
+    document.getElementById(`reject-form-${id}`).submit();
+}
+</script>
+{% endblock %}

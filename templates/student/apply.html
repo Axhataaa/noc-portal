@@ -1,0 +1,585 @@
+{% extends 'base.html' %}
+{% block title %}New Application
+{% endblock %}
+{% block breadcrumb %}New Application{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Apply for Internship NOC</h1>
+        <p class="page-sub">Fill out all details accurately — your HOD uses this to verify the internship is genuine.</p>
+    </div>
+    <a href="{{ url_for('student.dashboard') }}" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Back
+    </a>
+</div>
+
+<div class="form-layout">
+    <div class="form-main">
+        <form method="POST" action="{{ url_for('student.apply') }}" class="application-form" id="applyForm" novalidate enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <!-- ① Student Details -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-num {% if errors.student_contact or errors.academic_year %}section-num-error{% endif %}">1</div>
+                    <div>
+                        <h3>Student Details</h3>
+                        <p>Your contact information for this application</p>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <div class="form-input" style="background:var(--bg-elevated);cursor:default;opacity:0.7;">{{ current_user.name }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Enrollment No.</label>
+                            <div class="form-input" style="background:var(--bg-elevated);cursor:default;opacity:0.7;">{{ current_user.enrollment or '—' }}</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Department</label>
+                            <div class="form-input" style="background:var(--bg-elevated);cursor:default;opacity:0.7;">{{ current_user.department }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Branch</label>
+                            <div class="form-input" style="background:var(--bg-elevated);cursor:default;opacity:0.7;">{{ current_user.branch or '—' }}</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="student_contact">Your Contact Number <span class="req">*</span></label>
+                            <input type="text" id="student_contact" name="student_contact"
+                                   class="form-input {% if errors.student_contact %}field-error{% endif %}"
+                                   placeholder="e.g. +91 98765 43210"
+                                   value="{{ form.student_contact or '' }}" maxlength="20">
+                            {% if errors.student_contact %}<span class="field-error-msg">{{ errors.student_contact }}</span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="academic_year">Current Academic Year <span class="req">*</span></label>
+                            <select id="academic_year" name="academic_year"
+                                    class="form-input {% if errors.academic_year %}field-error{% endif %}">
+                                <option value="">Select Year</option>
+                                <option value="1st Year" {% if form.academic_year == '1st Year' %}selected{% endif %}>1st Year</option>
+                                <option value="2nd Year" {% if form.academic_year == '2nd Year' %}selected{% endif %}>2nd Year</option>
+                                <option value="3rd Year" {% if form.academic_year == '3rd Year' %}selected{% endif %}>3rd Year</option>
+                                <option value="4th Year" {% if form.academic_year == '4th Year' %}selected{% endif %}>4th Year</option>
+                            </select>
+                            {% if errors.academic_year %}<span class="field-error-msg">{{ errors.academic_year }}</span>{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② Company Information -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-num {% if errors.company_name or errors.internship_role or errors.location or errors.company_address %}section-num-error{% endif %}">2</div>
+                    <div>
+                        <h3>Company Information</h3>
+                        <p>Basic details about the organization offering the internship</p>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company_name">Company Name <span class="req">*</span></label>
+                            <input type="text" id="company_name" name="company_name" class="form-input {% if errors.company_name %}field-error{% endif %}"
+                                   placeholder="e.g. Google India Pvt. Ltd."
+                                   value="{{ form.company_name or '' }}" maxlength="200">
+                            {% if errors.company_name %}<span class="field-error-msg">{{ errors.company_name }}</span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="internship_role">Internship Role / Position <span class="req">*</span></label>
+                            <input type="text" id="internship_role" name="internship_role" class="form-input {% if errors.internship_role %}field-error{% endif %}"
+                                   placeholder="e.g. Software Engineering Intern"
+                                   value="{{ form.internship_role or '' }}" maxlength="150">
+                            {% if errors.internship_role %}<span class="field-error-msg">{{ errors.internship_role }}</span>{% endif %}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">City / Location <span class="req">*</span></label>
+                            <input type="text" id="location" name="location" class="form-input {% if errors.location %}field-error{% endif %}"
+                                   placeholder="e.g. Bangalore, Karnataka"
+                                   value="{{ form.location or '' }}" maxlength="150">
+                            {% if errors.location %}<span class="field-error-msg">{{ errors.location }}</span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="internship_mode">Internship Mode <span class="req">*</span></label>
+                            <select id="internship_mode" name="internship_mode" class="form-input">
+                                <option value="On-site"  {% if (form.internship_mode or 'On-site') == 'On-site'  %}selected{% endif %}>On-site</option>
+                                <option value="Remote"   {% if form.internship_mode == 'Remote'   %}selected{% endif %}>Remote</option>
+                                <option value="Hybrid"   {% if form.internship_mode == 'Hybrid'   %}selected{% endif %}>Hybrid</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company_address">Full Company Address <span class="req">*</span></label>
+                        <input type="text" id="company_address" name="company_address" class="form-input {% if errors.company_address %}field-error{% endif %}"
+                               placeholder="e.g. Building No. 8, DLF Cyber City, Gurugram – 122002"
+                               value="{{ form.company_address or '' }}" maxlength="300">
+                        {% if errors.company_address %}<span class="field-error-msg">{{ errors.company_address }}</span>{% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="company_website">Company Website</label>
+                        <input type="url" id="company_website" name="company_website" class="form-input"
+                               placeholder="https://www.company.com"
+                               value="{{ form.company_website or '' }}" maxlength="200">
+                        <span class="field-hint">Helps HOD verify the company is legitimate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ③ Manager / Supervisor Details -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-num {% if errors.manager_name or errors.manager_email %}section-num-error{% endif %}">3</div>
+                    <div>
+                        <h3>Manager / Supervisor Details</h3>
+                        <p>Contact information of the person who issued the offer or will supervise you</p>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="manager_name">Manager / Supervisor Name <span class="req">*</span></label>
+                            <input type="text" id="manager_name" name="manager_name" class="form-input {% if errors.manager_name %}field-error{% endif %}"
+                                   placeholder="e.g. Rahul Verma"
+                                   value="{{ form.manager_name or '' }}" maxlength="150">
+                            {% if errors.manager_name %}<span class="field-error-msg">{{ errors.manager_name }}</span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="manager_designation">Designation</label>
+                            <input type="text" id="manager_designation" name="manager_designation" class="form-input"
+                                   placeholder="e.g. Senior Software Engineer / HR Manager"
+                                   value="{{ form.manager_designation or '' }}" maxlength="150">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="manager_email">Manager's Official Email <span class="req">*</span></label>
+                            <input type="email" id="manager_email" name="manager_email" class="form-input {% if errors.manager_email %}field-error{% endif %}"
+                                   placeholder="rahul.verma@company.com"
+                                   value="{{ form.manager_email or '' }}" maxlength="150">
+                            {% if errors.manager_email %}<span class="field-error-msg">{{ errors.manager_email }}</span>{% endif %}
+                            <span class="field-hint">Must be a company domain email, not personal</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="manager_phone">Manager's Phone / Ext.</label>
+                            <input type="text" id="manager_phone" name="manager_phone" class="form-input"
+                                   placeholder="e.g. +91 98765 43210"
+                                   value="{{ form.manager_phone or '' }}" maxlength="20">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ④ Offer Letter Details -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-num {% if errors.noc_purpose or errors.offer_letter_pdf %}section-num-error{% endif %}">4</div>
+                    <div>
+                        <h3>Offer Letter & NOC Purpose</h3>
+                        <p>Upload your offer letter PDF and describe the work you'll be doing</p>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-group">
+                        <label for="offer_letter_ref">Offer Letter Reference Number / Date</label>
+                        <input type="text" id="offer_letter_ref" name="offer_letter_ref" class="form-input"
+                               placeholder="e.g. OL/2026/INT/0042  or  Dated: 10 March 2026"
+                               value="{{ form.offer_letter_ref or '' }}" maxlength="200">
+                        <span class="field-hint">Found on the header or footer of your offer letter</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="offer_letter_pdf">Upload Offer Letter (PDF) <span class="req">*</span></label>
+
+                        <!-- Drop zone — hidden once a file is chosen -->
+                        <div class="upload-drop-zone {% if errors.offer_letter_pdf %}upload-error{% endif %}" id="uploadZone">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="color:var(--text-muted);margin-bottom:0.5rem;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p style="font-size:0.83rem;color:var(--text-secondary);margin-bottom:0.25rem;">Drag &amp; drop your PDF here, or <span style="color:var(--color-accent);font-weight:600;">click to browse</span></p>
+                            <p style="font-size:0.72rem;color:var(--text-muted);">PDF only &nbsp;·&nbsp; Max 5 MB &nbsp;·&nbsp; Only one file</p>
+                            <input type="file" id="offer_letter_pdf" name="offer_letter_pdf"
+                                   accept=".pdf,application/pdf" required
+                                   style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
+                        </div>
+
+                        <!-- File preview card — shown after selection -->
+                        <div id="filePreviewCard" style="display:none;" class="upload-preview-card">
+                            <div class="upload-preview-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8"/></svg>
+                            </div>
+                            <div class="upload-preview-info">
+                                <a  class="upload-preview-name" id="previewName" href="#" target="_blank" rel="noopener" title="Click to preview PDF" style="text-decoration:none;color:inherit;">—</a>
+                                <span class="upload-preview-meta" id="previewMeta">—</span>
+                            </div>
+                            <button type="button" class="upload-remove-btn" id="removeFileBtn" title="Remove and choose a different file">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                                Remove
+                            </button>
+                        </div>
+
+                        {% if errors.offer_letter_pdf %}
+                        <span class="field-error-msg">{{ errors.offer_letter_pdf }}</span>
+                        {% endif %}
+                        <span class="field-hint">Only one offer letter allowed per application. You can replace it before submitting.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="noc_purpose">Purpose of NOC / What You'll Be Working On <span class="req">*</span></label>
+                        <textarea id="noc_purpose" name="noc_purpose" class="form-input form-textarea {% if errors.noc_purpose %}field-error{% endif %}"
+                                  placeholder="Briefly state why you need the NOC and what project or team you will be joining..."
+                                  rows="4" maxlength="800">{{ form.noc_purpose or '' }}</textarea>
+                        {% if errors.noc_purpose %}<span class="field-error-msg">{{ errors.noc_purpose }}</span>{% endif %}
+                        <div class="char-count"><span id="nocCount">{{ (form.noc_purpose or '')|length }}</span>/800</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ⑤ Duration & Compensation -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-num {% if errors.start_date or errors.end_date %}section-num-error{% endif %}">5</div>
+                    <div>
+                        <h3>Duration & Compensation</h3>
+                        <p>Internship timeline and financial details</p>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start_date">Start Date <span class="req">*</span></label>
+                            <input type="date" id="start_date" name="start_date"
+                                   class="form-input {% if errors.start_date %}field-error{% endif %}"
+                                   value="{{ form.start_date or '' }}" onchange="updateDuration()">
+                            {% if errors.start_date %}<span class="field-error-msg">{{ errors.start_date }}</span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="end_date">End Date <span class="req">*</span></label>
+                            <input type="date" id="end_date" name="end_date"
+                                   class="form-input {% if errors.end_date %}field-error{% endif %}"
+                                   value="{{ form.end_date or '' }}" onchange="updateDuration()">
+                            {% if errors.end_date %}<span class="field-error-msg">{{ errors.end_date }}</span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <div class="form-input duration-display" id="durationDisplay">Select dates</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="stipend">Monthly Stipend</label>
+                            <input type="text" id="stipend" name="stipend" class="form-input"
+                                   placeholder="e.g. ₹15,000/month or Unpaid"
+                                   value="{{ form.stipend or '' }}" maxlength="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="work_hours">Working Hours / Days</label>
+                            <input type="text" id="work_hours" name="work_hours" class="form-input"
+                                   placeholder="e.g. Mon–Fri, 9 AM – 6 PM"
+                                   value="{{ form.work_hours or '' }}" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ⑥ Additional Description -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-num">6</div>
+                    <div>
+                        <h3>Additional Description</h3>
+                        <p>Any extra context, tech stack, or academic relevance (optional)</p>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <div class="form-group">
+                        <label for="description">Internship Description</label>
+                        <textarea id="description" name="description" class="form-input form-textarea"
+                                  placeholder="Describe the technology stack, what you'll learn, and how it relates to your coursework..."
+                                  rows="4" maxlength="1000">{{ form.description or '' }}</textarea>
+                        <div class="char-count"><span id="descCount">{{ (form.description or '')|length }}</span>/1000</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-actions">
+                <a href="{{ url_for('student.dashboard') }}" class="btn-outline">Cancel</a>
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    Submit Application
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="form-sidebar">
+        <div class="info-card">
+            <h4>📋 Guidelines</h4>
+            <ul>
+                <li>Submit at least 7 days before your start date</li>
+                <li>HOD will review within 5 working days</li>
+                <li>Manager email must be a company domain (not Gmail/Yahoo)</li>
+                <li>Keep a copy of your offer letter handy</li>
+                <li>Pending applications can be withdrawn anytime</li>
+            </ul>
+        </div>
+        <div class="info-card" style="margin-top:1rem;">
+            <h4>✅ What HOD Verifies</h4>
+            <ul>
+                <li>Company is a registered organization</li>
+                <li>Manager / supervisor contact is real</li>
+                <li>Offer letter reference is valid</li>
+                <li>Dates and duration are reasonable</li>
+                <li>Internship aligns with your academics</li>
+            </ul>
+        </div>
+        <div class="info-card" style="margin-top:1rem;">
+            <h4>👤 Your Profile</h4>
+            <div class="profile-mini">
+                <div class="pm-row"><span>Name</span><strong>{{ current_user.name }}</strong></div>
+                <div class="pm-row"><span>Department</span><strong>{{ current_user.department }}</strong></div>
+                <div class="pm-row"><span>Enrollment</span><strong>{{ current_user.enrollment or 'N/A' }}</strong></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.req { color: var(--color-rejected); }
+.field-hint { display:block; font-size:0.72rem; color:var(--text-secondary); margin-top:0.3rem; }
+.field-error-msg {
+    display: block; font-size: 0.73rem; color: var(--color-rejected);
+    margin-top: 0.35rem; font-weight: 500;
+    animation: errIn 0.25s ease;
+}
+@keyframes errIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+input.field-error, textarea.field-error, select.field-error {
+    border-color: var(--color-rejected) !important;
+    background: rgba(239,68,68,0.04) !important;
+}
+.section-num-error {
+    background: rgba(239,68,68,0.15) !important;
+    color: var(--color-rejected) !important;
+    border: 1.5px solid rgba(239,68,68,0.35) !important;
+}
+
+.upload-drop-zone {
+    position: relative;
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--bg-elevated);
+}
+.upload-drop-zone:hover,
+.upload-drop-zone.drag-over { border-color: var(--color-accent); background: rgba(59,130,246,0.05); }
+.upload-drop-zone.upload-error { border-color: rgba(239,68,68,0.45); background: rgba(239,68,68,0.04); }
+
+/* File preview card */
+.upload-preview-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--bg-elevated);
+    border: 1.5px solid rgba(34,197,94,0.30);
+    border-radius: var(--radius);
+    margin-top: 0;
+}
+.upload-preview-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    background: rgba(34,197,94,0.12);
+    color: var(--color-approved);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.upload-preview-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+.upload-preview-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.upload-preview-meta {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+.upload-preview-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: rgba(34,197,94,0.12);
+    color: var(--color-approved);
+    border: 1px solid rgba(34,197,94,0.22);
+    border-radius: 999px;
+    padding: 0.22rem 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    font-family: inherit;
+}
+.upload-preview-badge:hover {
+    background: rgba(34,197,94,0.22);
+    border-color: rgba(34,197,94,0.45);
+}
+.upload-remove-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: none;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+    font-family: inherit;
+}
+.upload-remove-btn:hover {
+    background: rgba(239,68,68,0.08);
+    color: var(--color-rejected);
+    border-color: rgba(239,68,68,0.30);
+}
+
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Set min date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('start_date').min = today;
+document.getElementById('end_date').min   = today;
+
+function updateDuration() {
+    const s = new Date(document.getElementById('start_date').value);
+    const e = new Date(document.getElementById('end_date').value);
+    const d = document.getElementById('durationDisplay');
+    if (s && e && e > s) {
+        const days  = Math.round((e - s) / 86400000);
+        const weeks = Math.floor(days / 7);
+        const rem   = days % 7;
+        let txt = '';
+        if (weeks > 0) txt += `${weeks} week${weeks !== 1 ? 's' : ''}`;
+        if (rem   > 0) txt += `${txt ? ' ' : ''}${rem} day${rem !== 1 ? 's' : ''}`;
+        d.textContent = txt || '0 days';
+        d.style.color = 'var(--color-accent)';
+        document.getElementById('end_date').min = document.getElementById('start_date').value;
+    } else {
+        d.textContent = e <= s && s && e ? 'Invalid range' : 'Select dates';
+        d.style.color = e <= s && s && e ? 'var(--color-rejected)' : '';
+    }
+}
+
+// Init duration display if dates already set (e.g. on validation error return)
+if (document.getElementById('start_date').value && document.getElementById('end_date').value) {
+    updateDuration();
+}
+
+// Character counters
+[['description','descCount',1000],['noc_purpose','nocCount',800]].forEach(([id,cid,max]) => {
+    const el = document.getElementById(id);
+    const ct = document.getElementById(cid);
+    if (el && ct) el.addEventListener('input', () => { ct.textContent = el.value.length; });
+});
+
+// Auto-scroll to first error field on page load (if errors exist)
+document.addEventListener('DOMContentLoaded', function () {
+    const firstErr = document.querySelector('.field-error');
+    if (firstErr) {
+        // Smooth scroll with offset for topbar
+        const offset = 120;
+        const top = firstErr.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+        firstErr.focus({ preventScroll: true });
+    }
+});
+// ── Offer letter upload UX ───────────────────────────────────
+(function () {
+    const uploadInput   = document.getElementById('offer_letter_pdf');
+    const uploadZone    = document.getElementById('uploadZone');
+    const previewCard   = document.getElementById('filePreviewCard');
+    const previewName   = document.getElementById('previewName');
+    const previewMeta   = document.getElementById('previewMeta');
+    const removeBtn     = document.getElementById('removeFileBtn');
+
+    if (!uploadInput) return;
+
+    function formatSize(bytes) {
+        if (bytes < 1024)        return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    // Track object URL so we can revoke it when the file is removed
+    let currentObjectURL = null;
+
+    function showPreview(file) {
+        // Revoke any previous object URL to free memory
+        if (currentObjectURL) { URL.revokeObjectURL(currentObjectURL); }
+        currentObjectURL = URL.createObjectURL(file);
+
+        previewName.textContent = file.name;
+        previewName.href        = currentObjectURL;
+        previewName.style.textDecoration = 'underline';
+        previewName.style.cursor         = 'pointer';
+        previewMeta.textContent = formatSize(file.size) + ' · PDF';
+        uploadZone.style.display  = 'none';
+        previewCard.style.display = 'flex';
+    }
+
+    function resetUpload() {
+        // Revoke object URL and clear the input
+        if (currentObjectURL) { URL.revokeObjectURL(currentObjectURL); currentObjectURL = null; }
+        uploadInput.value = '';
+        previewName.href  = '#';
+        previewName.style.textDecoration = '';
+        previewCard.style.display = 'none';
+        uploadZone.style.display  = '';
+        uploadZone.style.borderColor = '';
+        uploadZone.classList.remove('drag-over');
+    }
+
+    uploadInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            showPreview(this.files[0]);
+        } else {
+            resetUpload();
+        }
+    });
+
+    // Remove button — clears selection and shows drop zone again
+    removeBtn.addEventListener('click', function () {
+        resetUpload();
+    });
+
+    // Drag-and-drop visual feedback
+    uploadZone.addEventListener('dragover',  e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+    uploadZone.addEventListener('dragleave', ()  => uploadZone.classList.remove('drag-over'));
+    uploadZone.addEventListener('drop',      ()  => uploadZone.classList.remove('drag-over'));
+}());
+
+</script>
+{% endblock %}

@@ -1,0 +1,359 @@
+{% extends 'base.html' %}
+{% block title %}User Management{% endblock %}
+{% block breadcrumb %}User Management{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">User Management</h1>
+        <p class="page-sub">Create accounts, activate or deactivate users, and reset passwords across all roles.</p>
+    </div>
+    <button onclick="openAddUserModal()" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Add User
+    </button>
+</div>
+
+<!-- Summary strip -->
+<div class="stats-grid" style="margin-bottom:1.5rem;">
+    <div class="stat-card">
+        <div class="stat-icon total">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ users|length }}</span>
+            <span class="stat-label">Total Users</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon total">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ users | selectattr('role', 'equalto', 'student') | list | length }}</span>
+            <span class="stat-label">Students</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon pending">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ users | selectattr('role', 'equalto', 'hod') | list | length }}</span>
+            <span class="stat-label">HODs</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon approved">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><polyline points="12 8 12 12 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value approved-text">{{ users | selectattr('is_active', 'equalto', 1) | list | length }}</span>
+            <span class="stat-label">Active Accounts</span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">All Registered Users</h2>
+        <span class="badge-count">{{ users|length }}</span>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th class="users-col-email">Email</th>
+                    <th>Role</th>
+                    <th class="users-col-dept">Department</th>
+                    <th class="users-col-enroll">Enrollment</th>
+                    <th>Status</th>
+                    <th class="users-col-joined">Joined</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="table-row {% if not user.is_active %}row-inactive{% endif %}">
+                    <td class="td-id">{{ user.id }}</td>
+                    <td>
+                        <div class="company-cell">
+                            <div class="company-avatar {% if not user.is_active %}inactive-avatar{% endif %}">
+                                {{ user.name[0].upper() }}
+                            </div>
+                            <div class="company-name">{{ user.name }}</div>
+                        </div>
+                    </td>
+                    <td class="company-location users-col-email">{{ user.email }}</td>
+                    <td><span class="role-badge role-{{ user.role }}">{{ user.role|title }}</span></td>
+                    <td class="users-col-dept">{{ user.department or '—' }}</td>
+                    <td class="users-col-enroll">{{ user.enrollment or '—' }}</td>
+                    <td>
+                        {% if user.is_active %}
+                        <span class="status-chip approved">Active</span>
+                        {% else %}
+                        <span class="status-chip rejected">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td class="date-cell users-col-joined">{{ user.created_at_fmt }}</td>
+                    <td>
+                        <div class="action-btns">
+                        {% if user.id != current_user.id %}
+                        <!-- Toggle active/inactive -->
+                        <form method="POST" action="{{ url_for('admin.toggle_user', uid=user.id) }}" style="display:inline;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit"
+                                    class="btn-icon {% if user.is_active %}danger{% else %}approve{% endif %}"
+                                    title="{{ 'Deactivate account' if user.is_active else 'Activate account' }}">
+                                {% if user.is_active %}
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18.36 6.64a9 9 0 11-12.73 0M12 2v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                {% else %}
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                {% endif %}
+                            </button>
+                        </form>
+                        <!-- Reset password -->
+                        <button onclick="showResetModal({{ user.id }}, '{{ user.name }}')"
+                                class="btn-icon" title="Reset password" style="color:var(--color-accent);">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        </button>
+                        <!-- Permanently delete -->
+                        <button onclick="showDeleteModal({{ user.id }}, '{{ user.name }}', '{{ user.email }}')"
+                                class="btn-icon danger" title="Delete account permanently">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="currentColor" stroke-width="2"/></svg>
+                        </button>
+                        {% else %}
+                        <span style="font-size:0.72rem;color:var(--text-muted);">You</span>
+                        {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Hidden reset password forms -->
+{% for user in users %}
+<form id="reset-form-{{ user.id }}" method="POST"
+      action="{{ url_for('admin.reset_password', uid=user.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="new_password" id="reset-pwd-{{ user.id }}">
+</form>
+{% endfor %}
+
+<!-- Hidden delete forms -->
+{% for user in users %}
+{% if user.id != current_user.id %}
+<form id="delete-form-{{ user.id }}" method="POST"
+      action="{{ url_for('admin.delete_user', uid=user.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+</form>
+{% endif %}
+{% endfor %}
+
+<!-- Add User form (submitted to admin_add_user) -->
+<form id="add-user-form" method="POST" action="{{ url_for('admin.add_user') }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="name"          id="au-name">
+    <input type="hidden" name="email"         id="au-email">
+    <input type="hidden" name="password"      id="au-password">
+    <input type="hidden" name="role"          id="au-role">
+    <input type="hidden" name="department"    id="au-dept">
+    <input type="hidden" name="enrollment_no" id="au-enroll">
+</form>
+<style>
+/* admin-users mobile */
+.user-name-cell { white-space: nowrap; }
+@media (max-width: 900px) {
+    /* Hide less critical columns on mobile */
+    .users-col-dept,
+    .users-col-enroll,
+    .users-col-joined { display: none; }
+}
+@media (max-width: 640px) {
+    .users-col-email { display: none; }
+}
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+/* ── Add User Modal ── */
+// Dept→Branch data for admin add-user modal
+const AU_DEPT_TO_BRANCHES = {{ DEPT_TO_BRANCHES | tojson }};
+const AU_BRANCH_TO_DEPT   = {{ BRANCH_TO_DEPT   | tojson }};
+
+function openAddUserModal() {
+    // Build department options from DEPT_TO_BRANCHES
+    const deptOpts = Object.keys(AU_DEPT_TO_BRANCHES)
+        .map(d => `<option value="${d}">${d}</option>`).join('');
+
+    openModal(
+        'Add New User',
+        `<div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="aui-name" class="form-input" placeholder="Full name">
+         </div>
+         <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" id="aui-email" class="form-input" placeholder="email@college.edu">
+         </div>
+         <div class="form-group">
+            <label>Role *</label>
+            <select id="aui-role" class="form-input" onchange="auToggleFields()">
+                <option value="student">Student</option>
+                <option value="hod">HOD</option>
+                <option value="admin">Admin</option>
+            </select>
+         </div>
+         <div class="form-group" id="aui-dept-group">
+            <label id="aui-dept-label">Department *</label>
+            <select id="aui-dept" class="form-input" onchange="auOnDeptChange(this.value)">
+                <option value="">Select Department</option>${deptOpts}
+            </select>
+         </div>
+         <div class="form-group" id="aui-branch-group" style="display:none;">
+            <label>Branch *</label>
+            <select id="aui-branch" class="form-input">
+                <option value="">Select Branch</option>
+            </select>
+         </div>
+         <div class="form-group" id="aui-enroll-group">
+            <label>Enrollment No. *</label>
+            <input type="text" id="aui-enroll" class="form-input" placeholder="e.g. CS2021001">
+         </div>
+         <div class="form-group">
+            <label>Password *</label>
+            <input type="password" id="aui-password" class="form-input" placeholder="Min. 6 characters">
+         </div>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-primary" onclick="submitAddUser()">Create Account</button>`
+    );
+}
+
+function auOnDeptChange(dept) {
+    const branchSel   = document.getElementById('aui-branch');
+    const branchGroup = document.getElementById('aui-branch-group');
+    const role        = document.getElementById('aui-role').value;
+    branchSel.innerHTML = '<option value="">Select Branch</option>';
+    if (role !== 'student') { branchGroup.style.display='none'; return; }
+    const branches = AU_DEPT_TO_BRANCHES[dept] || [];
+    if (branches.length) {
+        branches.forEach(b => {
+            const o=document.createElement('option'); o.value=b; o.textContent=b;
+            branchSel.appendChild(o);
+        });
+        branchGroup.style.display = '';
+    } else {
+        branchGroup.style.display = 'none';
+    }
+}
+
+function auToggleFields() {
+    const role        = document.getElementById('aui-role').value;
+    const deptGroup   = document.getElementById('aui-dept-group');
+    const branchGroup = document.getElementById('aui-branch-group');
+    const enrollGroup = document.getElementById('aui-enroll-group');
+    // Reset branch
+    document.getElementById('aui-dept').value = '';
+    document.getElementById('aui-branch').innerHTML = '<option value="">Select Branch</option>';
+    branchGroup.style.display  = 'none';
+    deptGroup.style.display    = role === 'admin' ? 'none' : '';
+    enrollGroup.style.display  = role === 'student' ? '' : 'none';
+}
+
+function submitAddUser() {
+    const name   = document.getElementById('aui-name').value.trim();
+    const email  = document.getElementById('aui-email').value.trim();
+    const pwd    = document.getElementById('aui-password').value;
+    const role   = document.getElementById('aui-role').value;
+    const dept   = document.getElementById('aui-dept')?.value || '';
+    const branch = document.getElementById('aui-branch')?.value || '';
+    const enroll = document.getElementById('aui-enroll')?.value || '';
+
+    let error = '';
+    if (!name)  error = 'Full name is required.';
+    else if (!email || !email.includes('@')) error = 'A valid email is required.';
+    else if (pwd.length < 6) error = 'Password must be at least 6 characters.';
+    else if (role === 'student' && !dept)   error = 'Please select a department.';
+    else if (role === 'student' && !branch) error = 'Please select a branch.';
+    else if (role === 'hod' && !dept)       error = 'Please select a department.';
+
+    if (error) {
+        let errEl = document.getElementById('add-user-error');
+        if (!errEl) {
+            errEl = document.createElement('p'); errEl.id = 'add-user-error';
+            errEl.style.cssText = 'color:var(--color-rejected);font-size:0.8rem;margin-bottom:0.75rem;text-align:center;';
+            document.getElementById('modalFooter').prepend(errEl);
+        }
+        errEl.textContent = error; return;
+    }
+
+    document.getElementById('au-name').value     = name;
+    document.getElementById('au-email').value    = email;
+    document.getElementById('au-password').value = pwd;
+    document.getElementById('au-role').value     = role;
+    document.getElementById('au-dept').value     = role === 'student' ? AU_BRANCH_TO_DEPT[branch] || dept : dept;
+    document.getElementById('au-enroll').value   = enroll;
+    // Add branch hidden input dynamically
+    let branchHidden = document.getElementById('au-branch-hidden');
+    if (!branchHidden) {
+        branchHidden = document.createElement('input');
+        branchHidden.type = 'hidden'; branchHidden.id = 'au-branch-hidden';
+        branchHidden.name = 'branch';
+        document.getElementById('add-user-form').appendChild(branchHidden);
+    }
+    branchHidden.value = branch;
+    document.getElementById('add-user-form').submit();
+}
+
+function showDeleteModal(uid, name, email) {
+    openModal('⚠️ Permanently Delete User',
+        `<p>You are about to <strong>permanently delete</strong> this account:</p>
+         <div class="modal-detail-box" style="margin:0.75rem 0;">
+             <div><strong>Name:</strong> ${name}</div>
+             <div><strong>Email:</strong> ${email}</div>
+         </div>
+         <p class="modal-warning" style="margin-top:0.5rem;">
+             ⚠️ This will also delete all their applications and audit logs. This action <strong>cannot be undone</strong>.
+         </p>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-danger" onclick="document.getElementById('delete-form-${uid}').submit()">
+             Yes, Delete Permanently
+         </button>`
+    );
+}
+
+/* ── Reset Password Modal ── */
+function showResetModal(uid, name) {
+    openModal('Reset Password',
+        `<p>Set a new password for <strong>${name}</strong>.</p>
+         <div class="form-group" style="margin-top:1rem;">
+             <label>New Password <span style="color:var(--color-rejected);">*</span></label>
+             <input type="password" id="reset-input-${uid}" class="form-input"
+                    placeholder="Min. 6 characters" style="margin-top:0.4rem;">
+         </div>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-primary" onclick="submitReset(${uid})">Reset Password</button>`
+    );
+}
+
+function submitReset(uid) {
+    const pwd = document.getElementById('reset-input-' + uid).value.trim();
+    if (pwd.length < 6) {
+        document.getElementById('reset-input-' + uid).style.borderColor = 'var(--color-rejected)';
+        return;
+    }
+    document.getElementById('reset-pwd-' + uid).value = pwd;
+    document.getElementById('reset-form-' + uid).submit();
+}
+</script>
+{% endblock %}

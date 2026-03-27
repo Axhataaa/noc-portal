@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% block title %}Sign In{% endblock %}
+
+{% block public_content %}
+<div class="auth-page">
+    <div class="auth-left">
+        <div class="auth-brand">
+            <a href="{{ url_for('auth.landing') }}" class="logo">
+                <div class="logo-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 5.5 5 12C5 16.5 8 20 12 21C16 20 19 16.5 19 12C19 5.5 12 2 12 2Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12L11.2 14.2L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="logo-title">NOC Portal</span>
+            </a>
+        </div>
+
+        <div class="auth-hero-text" id="leftTitle">
+            <h1>Welcome back, Student</h1>
+            <p>Access your internship applications and track approval status.</p>
+        </div>
+
+        <div class="auth-role-info" id="leftInfo">
+            <!-- Student -->
+            <div class="ari-panel" id="panel-student">
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>View your applications</strong>
+                        <span>See all submitted internship requests</span>
+                    </div>
+                </div>
+                <div class="ari-line"></div>
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>Track approval status</strong>
+                        <span>Pending, approved, or rejected — live</span>
+                    </div>
+                </div>
+                <div class="ari-line"></div>
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>Read HOD remarks</strong>
+                        <span>See the reason behind every decision</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOD -->
+            <div class="ari-panel hidden" id="panel-hod">
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>Review pending applications</strong>
+                        <span>Applications from your department await you</span>
+                    </div>
+                </div>
+                <div class="ari-line"></div>
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>Approve or reject with remarks</strong>
+                        <span>Your decision is recorded and visible to students</span>
+                    </div>
+                </div>
+                <div class="ari-line"></div>
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>Filter by status</strong>
+                        <span>Search and sort through all submissions</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin -->
+            <div class="ari-panel hidden" id="panel-admin">
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>System-wide analytics</strong>
+                        <span>Charts and stats across all departments</span>
+                    </div>
+                </div>
+                <div class="ari-line"></div>
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>Manage all users</strong>
+                        <span>Activate or deactivate any account</span>
+                    </div>
+                </div>
+                <div class="ari-line"></div>
+                <div class="ari-item">
+                    <div class="ari-dot dot-done"></div>
+                    <div>
+                        <strong>Export reports as CSV</strong>
+                        <span>Download complete application data</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="auth-form-container">
+            <div class="auth-form-header">
+                <h2>Sign In</h2>
+                <p>Enter your credentials to continue</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('auth.login') }}" class="auth-form" novalidate>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label id="roleLabel">I am a Student</label>
+                    <div class="role-selector">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="student" checked onchange="switchRole('student')">
+                            <span class="role-option-inner">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                                Student
+                            </span>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="hod" onchange="switchRole('hod')">
+                            <span class="role-option-inner">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2"/></svg>
+                                HOD
+                            </span>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="admin" onchange="switchRole('admin')">
+                            <span class="role-option-inner">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                Admin
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input"
+                           placeholder="your@email.edu" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" class="form-input"
+                               placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" class="input-toggle" onclick="togglePassword('password')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full">
+                    Sign In
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+            </form>
+
+            {% if google_oauth_enabled %}
+            <div class="auth-divider"><span>or</span></div>
+            <a href="{{ url_for('auth.google_login') }}" class="btn-google btn-full">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </a>
+            {% endif %}
+
+            <div class="auth-divider"><span>New here?</span></div>
+            <a href="{{ url_for('auth.register') }}" class="btn-outline btn-full">Create Account</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.auth-role-info { margin-top: 1.75rem; }
+.ari-panel { display: flex; flex-direction: column; gap: 0; }
+.ari-panel.hidden { display: none; }
+.ari-item {
+    display: flex; align-items: flex-start; gap: 0.85rem;
+    padding: 0.75rem 0;
+}
+.ari-item strong { display: block; font-size: 0.83rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.ari-item span   { display: block; font-size: 0.74rem; color: var(--text-secondary); line-height: 1.5; }
+.ari-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 3px; border: 2px solid;
+}
+.dot-done { background: var(--color-accent); border-color: var(--color-accent); }
+.ari-line {
+    width: 1px; height: 18px;
+    background: var(--border);
+    margin-left: 6px;
+}
+</style>
+
+<script>
+const roleData = {
+    student: {
+        label:  'I am a Student',
+        title:  'Welcome back, Student',
+        desc:   'Access your internship applications and track approval status.',
+        panel:  'panel-student'
+    },
+    hod: {
+        label:  'I am an HOD',
+        title:  'Welcome back, HOD',
+        desc:   'Review and manage internship applications from your department.',
+        panel:  'panel-hod'
+    },
+    admin: {
+        label:  'I am an Admin',
+        title:  'Welcome back, Admin',
+        desc:   'Monitor the full system — analytics, users, and reports.',
+        panel:  'panel-admin'
+    }
+};
+
+function switchRole(role) {
+    const d = roleData[role];
+
+    // Update "I am a/an" label
+    document.getElementById('roleLabel').textContent = d.label;
+
+    // Update left panel title + description
+    document.getElementById('leftTitle').querySelector('h1').textContent = d.title;
+    document.getElementById('leftTitle').querySelector('p').textContent  = d.desc;
+
+    // Switch info panel
+    document.querySelectorAll('.ari-panel').forEach(p => p.classList.add('hidden'));
+    document.getElementById(d.panel).classList.remove('hidden');
+}
+
+switchRole('student');
+</script>
+{% endblock %}

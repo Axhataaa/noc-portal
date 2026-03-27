@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOC Portal | Internship Approvals</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d0e1b'/%3E%3Cpath d='M16 6 C16 6 10 9 10 16 C10 20 13 23 16 24 C19 23 22 20 22 16 C22 9 16 6 16 6Z' fill='none' stroke='%23c8a84b' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M13 16 L15.2 18.2 L19.5 13.5' stroke='%23c8a84b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:        #06070f;
+            --bg-card:   #0c0d1c;
+            --bg-card2:  #10111f;
+            --border:    rgba(255,255,255,0.07);
+            --text:      #eceef8;
+            --text-sec:  #7a80a0;
+            --text-muted:#3d4260;
+            --gold:      #c8a84b;
+            --gold-lt:   #e8c96a;
+            --gold-dim:  rgba(200,168,75,0.1);
+            --gold-glow: rgba(200,168,75,0.22);
+            --blue:      #4a6cf7;
+            --green:     #2ecc8a;
+            --purple:    #a855f7;
+        }
+        [data-theme="light"] {
+            --bg:#f3f4fb; --bg-card:#fff; --bg-card2:#f8f9ff;
+            --border:rgba(0,0,0,0.08); --text:#0d0e1a;
+            --text-sec:#525870; --text-muted:#9298b5;
+        }
+        html { scroll-behavior:smooth; }
+        body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+        a { text-decoration:none; color:inherit; }
+
+        /* ── AMBIENT ── */
+        .amb { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+        .ab { position:absolute; border-radius:50%; filter:blur(140px); }
+        .ab1 { width:700px; height:700px; background:radial-gradient(circle,#c8a84b,transparent 70%); top:-280px; left:-200px; opacity:0.08; animation:drift 22s ease-in-out infinite; }
+        .ab2 { width:550px; height:550px; background:radial-gradient(circle,#4a6cf7,transparent 70%); top:30%; right:-180px; opacity:0.07; animation:drift 28s ease-in-out 8s infinite reverse; }
+        .ab3 { width:400px; height:400px; background:radial-gradient(circle,#2ecc8a,transparent 70%); bottom:-100px; left:35%; opacity:0.05; animation:drift 20s ease-in-out 4s infinite; }
+        @keyframes drift { 0%,100%{transform:translate(0,0)} 35%{transform:translate(30px,-25px)} 70%{transform:translate(-20px,20px)} }
+
+        /* ── NAV ── */
+        .nav { position:fixed; top:0; left:0; right:0; z-index:200; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 2.5rem; background:rgba(6,7,15,0.75); backdrop-filter:blur(22px); border-bottom:1px solid var(--border); }
+        [data-theme="light"] .nav { background:rgba(243,244,251,0.88); }
+        .nav-brand { display:flex; align-items:center; gap:0.75rem; }
+        .nav-mark { width:36px; height:36px; border:1.5px solid var(--gold); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--gold); background:var(--gold-dim); }
+        .nav-name { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; }
+        .nav-sub { font-size:0.57rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--text-sec); display:block; margin-top:1px; }
+        .nav-right { display:flex; align-items:center; gap:0.75rem; }
+        .nav-theme { background:none; border:none; cursor:pointer; color:var(--text-muted); padding:0.45rem; border-radius:7px; transition:color .15s,background .15s; }
+        .nav-theme:hover { color:var(--gold); background:var(--gold-dim); }
+        .nav-signin { font-size:0.82rem; font-weight:500; color:var(--text-sec); padding:0.5rem 1.1rem; border:1px solid var(--border); border-radius:8px; transition:all .2s; }
+        .nav-signin:hover { border-color:var(--gold); color:var(--gold); background:var(--gold-dim); }
+
+        /* ── HERO ── */
+        .hero { position:relative; z-index:10; min-height:100vh; display:flex; align-items:center; padding:80px 2.5rem 5rem; max-width:1220px; margin:0 auto; gap:4rem; }
+        .hero-left { flex:1; animation:fadeUp .9s ease both; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+        .hero-tag { display:inline-flex; align-items:center; gap:0.6rem; font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--gold); padding:0.4rem 1rem; border:1px solid rgba(200,168,75,0.22); border-radius:50px; background:var(--gold-dim); margin-bottom:2rem; animation:fadeUp .9s .1s ease both; }
+        .hero-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); animation:blink 2s ease infinite; flex-shrink:0; }
+        @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.35;transform:scale(0.5)} }
+
+        .hero-h1 { font-family:'Playfair Display',serif; font-size:clamp(3rem,5.8vw,5rem); font-weight:900; line-height:1.06; color:var(--text); margin-bottom:1.75rem; letter-spacing:-0.025em; animation:fadeUp .9s .18s ease both; }
+        .hero-h1 em { font-style:italic; background:linear-gradient(130deg,#c8a84b 20%,#f0d980); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+        .hero-p { font-size:1.02rem; color:var(--text-sec); line-height:1.85; max-width:480px; margin-bottom:2.5rem; animation:fadeUp .9s .28s ease both; }
+
+        .btn-gold { display:inline-flex; align-items:center; gap:0.65rem; background:linear-gradient(135deg,#c8a84b,#e8c96a); color:#0a0800; font-weight:700; font-size:0.92rem; padding:0.9rem 2.1rem; border-radius:10px; box-shadow:0 4px 22px var(--gold-glow); transition:all .25s; animation:fadeUp .9s .38s ease both; }
+        .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(200,168,75,.5),0 0 0 4px rgba(200,168,75,.1); color:#0a0800; }
+        .btn-gold svg { transition:transform .2s; }
+        .btn-gold:hover svg { transform:translateX(3px); }
+
+        .hero-stats { display:flex; gap:2.5rem; margin-top:3rem; padding-top:2.5rem; border-top:1px solid var(--border); animation:fadeUp .9s .5s ease both; }
+        .stat-num { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--text); line-height:1; margin-bottom:0.28rem; }
+        .stat-num span { color:var(--gold); font-size:1.4rem; }
+        .stat-label { font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.09em; }
+
+        /* ── PROCESS CARD ── */
+        .hero-right { flex-shrink:0; width:360px; animation:fadeUp .9s .3s ease both; }
+        .pcard { background:var(--bg-card); border:1px solid var(--border); border-radius:20px; overflow:hidden; box-shadow:0 32px 80px rgba(0,0,0,.5); position:relative; }
+        .pcard-topline { height:1px; background:linear-gradient(90deg,transparent 5%,var(--gold) 40%,transparent 95%); opacity:0.45; }
+        .pcard-header { padding:1.1rem 1.5rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:0.65rem; }
+        .pcard-dots { display:flex; gap:5px; }
+        .pcd { width:10px; height:10px; border-radius:50%; }
+        .pcd:nth-child(1){background:#ff5f57} .pcd:nth-child(2){background:#febc2e} .pcd:nth-child(3){background:#28c840}
+        .pcard-title { font-size:0.72rem; font-weight:600; color:var(--text-muted); margin-left:auto; letter-spacing:.04em; }
+
+        .pcard-steps { padding:0.5rem 0; }
+        .pstep { display:flex; align-items:flex-start; gap:1rem; padding:1.05rem 1.5rem; cursor:default; transition:background .2s; position:relative; }
+        .pstep:hover { background:rgba(255,255,255,0.025); }
+        .pstep:not(:last-child) { border-bottom:1px solid var(--border); }
+
+        .pstep-icon { width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+        .pstep-icon.s { background:rgba(74,108,247,.13); color:#7a9bff; border:1px solid rgba(74,108,247,.2); }
+        .pstep-icon.h { background:rgba(200,168,75,.12); color:var(--gold); border:1px solid rgba(200,168,75,.2); }
+        .pstep-icon.n { background:rgba(46,204,138,.1); color:#2ecc8a; border:1px solid rgba(46,204,138,.2); }
+        .pstep-icon.a { background:rgba(168,85,247,.1); color:#c084fc; border:1px solid rgba(168,85,247,.2); }
+
+        .pstep-body h4 { font-size:0.85rem; font-weight:700; color:var(--text); margin-bottom:0.22rem; }
+        .pstep-body p  { font-size:0.74rem; color:var(--text-sec); line-height:1.55; }
+
+        .pcard-footer { padding:1rem 1.5rem; background:linear-gradient(135deg,rgba(200,168,75,.07),rgba(200,168,75,.03)); border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+        .pcard-footer-label { font-size:0.68rem; color:var(--text-muted); font-weight:500; }
+        .pcard-chips { display:flex; gap:0.4rem; }
+        .chip { font-size:0.63rem; font-weight:700; padding:0.28rem 0.72rem; border-radius:50px; text-transform:uppercase; letter-spacing:.06em; }
+        .chip.s { background:rgba(74,108,247,.13); color:#7a9bff; }
+        .chip.h { background:rgba(200,168,75,.13); color:var(--gold); }
+        .chip.a { background:rgba(46,204,138,.12); color:#2ecc8a; }
+
+        /* ── DIVIDER ── */
+        .wrap { position:relative; z-index:10; max-width:1220px; margin:0 auto; padding:0 2.5rem; }
+        .sep { border:none; border-top:1px solid var(--border); }
+
+        /* ── ROLES SECTION ── */
+        .roles { position:relative; z-index:10; max-width:1220px; margin:0 auto; padding:5.5rem 2.5rem 4rem; }
+        .eyebrow { display:inline-flex; align-items:center; gap:0.55rem; font-size:0.67rem; font-weight:600; text-transform:uppercase; letter-spacing:.15em; color:var(--gold); margin-bottom:1.1rem; }
+        .eyebrow::before { content:''; display:inline-block; width:22px; height:1.5px; background:var(--gold); }
+        .sec-h { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,3vw,2.7rem); font-weight:700; line-height:1.15; margin-bottom:3rem; }
+        .sec-h em { font-style:italic; color:var(--gold-lt); }
+
+        .rgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+        .rcard { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:2rem; position:relative; overflow:hidden; transition:border-color .3s,transform .35s cubic-bezier(.22,.68,0,1.2),box-shadow .35s; cursor:default; }
+        .rcard:hover { border-color:rgba(200,168,75,.35); transform:translateY(-10px) scale(1.01); box-shadow:0 28px 70px rgba(0,0,0,.45),0 0 0 1px rgba(200,168,75,.1); }
+        .rcard.s:hover { border-color:rgba(74,108,247,.35); box-shadow:0 28px 70px rgba(0,0,0,.45),0 0 30px rgba(74,108,247,.08); }
+        .rcard.a:hover { border-color:rgba(46,204,138,.35); box-shadow:0 28px 70px rgba(0,0,0,.45),0 0 30px rgba(46,204,138,.08); }
+        .rcard:hover .rcard-icon { transform:scale(1.12) rotate(-4deg); }
+        .rcard::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:16px 16px 0 0; opacity:.55; transition:opacity .3s; }
+        .rcard:hover::before { opacity:1; }
+        .rcard.s::before { background:linear-gradient(90deg,#4a6cf7,transparent); }
+        .rcard.h::before { background:linear-gradient(90deg,var(--gold),transparent); }
+        .rcard.a::before { background:linear-gradient(90deg,#2ecc8a,transparent); }
+        .rcard-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:1.4rem; transition:transform .35s cubic-bezier(.22,.68,0,1.2); }
+        .rcard.s .rcard-icon { background:rgba(74,108,247,.12); color:#7a9bff; border:1px solid rgba(74,108,247,.2); }
+        .rcard.h .rcard-icon { background:var(--gold-dim); color:var(--gold); border:1px solid rgba(200,168,75,.22); }
+        .rcard.a .rcard-icon { background:rgba(46,204,138,.1); color:#2ecc8a; border:1px solid rgba(46,204,138,.2); }
+        .rcard h3 { font-size:1.05rem; font-weight:700; color:var(--text); margin-bottom:0.65rem; }
+        .rcard p { font-size:0.82rem; color:var(--text-sec); line-height:1.78; }
+        .rbadge { display:inline-block; margin-top:1.4rem; font-size:0.63rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; padding:0.3rem 0.8rem; border-radius:50px; }
+        .rcard.s .rbadge { background:rgba(74,108,247,.12); color:#7a9bff; }
+        .rcard.h .rbadge { background:var(--gold-dim); color:var(--gold); }
+        .rcard.a .rbadge { background:rgba(46,204,138,.1); color:#2ecc8a; }
+
+        /* ── FOOTER ── */
+        .footer { position:relative; z-index:10; border-top:1px solid var(--border); padding:1.75rem 2.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        .footer-brand { display:flex; align-items:center; gap:0.65rem; }
+        .footer-name { font-family:'Cormorant Garamond',serif; font-size:0.95rem; font-weight:700; color:#d0d4e8; }
+        .footer-copy { font-size:0.75rem; color:#8b93b5; letter-spacing:0.01em; }
+        .footer-copy .author { color:#dfc27a; font-weight:600; letter-spacing:0.015em; }
+
+        /* ── FLASH ── */
+        .flash-wrap { position:fixed; top:76px; right:1.5rem; z-index:500; display:flex; flex-direction:column; gap:.5rem; }
+        .flash { display:flex; align-items:center; gap:.7rem; padding:.7rem 1rem; border-radius:10px; font-size:.82rem; font-weight:500; border:1px solid; max-width:340px; animation:slideIn .3s ease; backdrop-filter:blur(10px); }
+        @keyframes slideIn { from{opacity:0;transform:translateX(20px)} }
+        .flash-success{background:rgba(46,204,138,.1);border-color:rgba(46,204,138,.25);color:#6effc2}
+        .flash-error{background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.22);color:#fca5a5}
+        .flash-info{background:rgba(200,168,75,.09);border-color:rgba(200,168,75,.22);color:var(--gold-lt)}
+        .fc{background:none;border:none;color:currentColor;opacity:.5;cursor:pointer;font-size:1.1rem;margin-left:auto}
+
+        /* ── REVEAL ── */
+        .rv { opacity:0; transform:translateY(22px); transition:opacity .65s ease,transform .65s ease; }
+        .rv.in { opacity:1; transform:none; }
+        .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+
+        @media(max-width:900px){
+            .hero{flex-direction:column;gap:3rem;padding-top:100px}
+            .hero-right{width:100%}
+            .rgrid{grid-template-columns:1fr}
+            .footer{flex-direction:column;align-items:flex-start}
+            .hero-stats{gap:1.5rem}
+            .nav{padding:0 1.25rem}
+        }
+    </style>
+</head>
+<body>
+
+<div class="amb"><div class="ab ab1"></div><div class="ab ab2"></div><div class="ab ab3"></div></div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}
+<div class="flash-wrap">{% for cat,msg in messages %}
+<div class="flash flash-{{ cat }}">
+    <span>{% if cat=='success'%}✓{% elif cat=='error'%}✕{% else %}i{% endif %}</span>
+    <span>{{ msg }}</span>
+    <button class="fc" onclick="this.parentElement.remove()">×</button>
+</div>{% endfor %}</div>
+{% endif %}{% endwith %}
+
+<!-- NAV -->
+<nav class="nav">
+    <a href="{{ url_for('auth.landing') }}" class="nav-brand">
+        <div class="nav-mark">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 5.5 5 12C5 16.5 8 20 12 21C16 20 19 16.5 19 12C19 5.5 12 2 12 2Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12L11.2 14.2L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div><span class="nav-name">NOC Portal</span><span class="nav-sub">Internship Management</span></div>
+    </a>
+    <div class="nav-right">
+        <button class="nav-theme" onclick="toggleTheme()" title="Toggle theme">
+            <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <a href="{{ url_for('auth.login') }}" class="nav-signin">Sign In</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-left">
+        <div class="hero-tag"><div class="hero-dot"></div>No Objection Certificate System</div>
+        <h1 class="hero-h1">One place for all<br>internship <em>approvals.</em></h1>
+        <p class="hero-p">Students submit internship requests, the HOD reviews and decides, and the administration monitors everything — digitally, transparently, and on official record.</p>
+        <a href="{{ url_for('auth.register') }}" class="btn-gold">
+            Get Started
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </a>
+        <div class="hero-stats">
+            <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Access Roles</div></div>
+            <div class="stat-item"><div class="stat-num">100<span>%</span></div><div class="stat-label">Digital Process</div></div>
+            <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Paperwork</div></div>
+        </div>
+    </div>
+
+    <!-- Process card -->
+    <div class="hero-right">
+        <div class="pcard">
+            <div class="pcard-topline"></div>
+            <div class="pcard-header">
+                <div class="pcard-dots"><div class="pcd"></div><div class="pcd"></div><div class="pcd"></div></div>
+                <span class="pcard-title">How the process works</span>
+            </div>
+            <div class="pcard-steps">
+                <div class="pstep">
+                    <div class="pstep-icon s">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+                    </div>
+                    <div class="pstep-body">
+                        <h4>Student applies</h4>
+                        <p>Submits company, manager info, offer letter details and role for HOD review.</p>
+                    </div>
+                </div>
+                <div class="pstep">
+                    <div class="pstep-icon h">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="pstep-body">
+                        <h4>HOD reviews</h4>
+                        <p>Verifies authenticity, then approves or rejects with written remarks.</p>
+                    </div>
+                </div>
+                <div class="pstep">
+                    <div class="pstep-icon n">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="pstep-body">
+                        <h4>Student is notified</h4>
+                        <p>Status and remarks visible instantly on the student dashboard.</p>
+                    </div>
+                </div>
+                <div class="pstep">
+                    <div class="pstep-icon a">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="pstep-body">
+                        <h4>Admin oversees all</h4>
+                        <p>Coordinator monitors system-wide activity and exports CSV reports.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="pcard-footer">
+                <span class="pcard-footer-label">Three access levels</span>
+                <div class="pcard-chips">
+                    <span class="chip s">Student</span>
+                    <span class="chip h">HOD</span>
+                    <span class="chip a">Admin</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="wrap"><hr class="sep"></div>
+
+<!-- ROLES -->
+<section class="roles">
+    <div class="eyebrow rv">Roles &amp; Responsibilities</div>
+    <h2 class="sec-h rv">Everyone has a <em>defined role.</em></h2>
+    <div class="rgrid">
+        <div class="rcard s rv d1">
+            <div class="rcard-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg></div>
+            <h3>Student</h3>
+            <p>Submit internship applications with full company, manager and offer letter details. Track your status and read HOD feedback in real time.</p>
+            <span class="rbadge">Apply &amp; Track</span>
+        </div>
+        <div class="rcard h rv d2">
+            <div class="rcard-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <h3>Head of Department</h3>
+            <p>Review pending applications with full details — company address, manager contact, offer letter reference. Approve or reject with written remarks.</p>
+            <span class="rbadge">Review &amp; Decide</span>
+        </div>
+        <div class="rcard a rv d3">
+            <div class="rcard-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Administrator</h3>
+            <p>The Training &amp; Placement coordinator monitors system-wide data through an analytics dashboard and exports full department-wise CSV reports.</p>
+            <span class="rbadge">Monitor &amp; Export</span>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <a href="{{ url_for('auth.landing') }}" class="footer-brand">
+        <div class="nav-mark" style="width:30px;height:30px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 5.5 5 12C5 16.5 8 20 12 21C16 20 19 16.5 19 12C19 5.5 12 2 12 2Z" fill="currentColor" fill-opacity="0.15" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12L11.2 14.2L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="footer-name">NOC Portal</span>
+    </a>
+    <p class="footer-copy">Internship Approval System &nbsp;·&nbsp; Developed by <span class="author">Akshata Lokhande</span></p>
+</footer>
+
+<script>
+const TK='noc-theme';
+function getTheme(){return localStorage.getItem(TK)||'dark';}
+function applyTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    localStorage.setItem(TK,t);
+    const ic=document.getElementById('theme-icon');
+    if(ic) ic.innerHTML=t==='dark'
+        ?'<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+        :'<circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+}
+function toggleTheme(){applyTheme(getTheme()==='dark'?'light':'dark');}
+applyTheme(getTheme());
+document.querySelectorAll('.flash').forEach((f,i)=>{setTimeout(()=>{f.style.transition='opacity .35s';f.style.opacity='0';setTimeout(()=>f.remove(),350);},4000+i*300);});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

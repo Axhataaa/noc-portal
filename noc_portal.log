@@ -1,0 +1,866 @@
+2026-03-27 21:10:15  ERROR     app  Exception on /student/download-noc/8 [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 305, in download_noc
+    ok=True,
+    ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+2026-03-27 21:27:51  ERROR     app  Exception on /student/download-noc/8 [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 305, in download_noc
+    ok=True,
+    ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+2026-03-27 21:51:07  ERROR     app  Exception on /student/download-noc/8 [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 305, in download_noc
+    ok=True,
+    ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+2026-03-27 22:14:32  ERROR     app  Exception on /student/download-noc/8 [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 305, in download_noc
+    ok=True,
+    ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+2026-03-27 22:51:34  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 22:52:00  ERROR     app  Exception on /student/download-noc/8 [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 398, in download_noc
+    certs_dir = os.path.join(current_app.config['UPLOAD_FOLDER'], 'certificates')
+                ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+2026-03-27 22:52:16  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 22:52:20  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 22:52:22  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 22:52:22  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 22:52:31  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 22:54:09  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 22:55:27  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 122, in template
+    {% endif %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. You probably made a nesting mistake. Jinja is expecting this tag, but currently looking for 'endfor'. The innermost block that needs to be closed is 'for'.
+2026-03-27 23:02:49  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:02:56  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:02:59  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:31  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:33  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:34  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:34  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:35  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:35  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:35  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:03:36  ERROR     app  Exception on /student/my-nocs [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 274, in my_nocs
+    return render_template('student/my_nocs.html', nocs=nocs)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\templates\student\my_nocs.html", line 120, in template
+    {% else %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'else'. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+2026-03-27 23:08:43  ERROR     app  Exception on /student/view-noc/8 [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 352, in view_noc
+    certs_dir = os.path.join(current_app.config['UPLOAD_FOLDER'], 'certificates')
+                ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+2026-03-27 23:08:49  ERROR     app  Exception on /student/download-noc/8 [GET]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 36, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 49, in decorated
+    return f(*args, **kwargs)
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\student.py", line 398, in download_noc
+    certs_dir = os.path.join(current_app.config['UPLOAD_FOLDER'], 'certificates')
+                ^^
+NameError: name 'os' is not defined. Did you forget to import 'os'?
+2026-03-28 01:46:57  ERROR     app  Exception on /auth/google/complete [POST]
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ASUS\Documents\Work\anaconda3\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\routes\auth.py", line 267, in google_complete
+    log_action('GOOGLE_REGISTER', entity_type='User', entity_id=uid,
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               details=f'New {role} via Google OAuth: {pending["email"]}')
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\utils\auth.py", line 21, in log_action
+    db_query(
+    ~~~~~~~~^
+        "INSERT INTO audit_logs(user_id,action,entity_type,entity_id,details,ip_address) VALUES(?,?,?,?,?,?)",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (session.get('user_id'), action, entity_type, entity_id, details, request.remote_addr),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        commit=True
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ASUS\OneDrive\Documents\Attachments\NOC Project\noc_portal_upgraded\database\db.py", line 42, in db_query
+    cur = db.execute(sql, args)
+sqlite3.IntegrityError: FOREIGN KEY constraint failed

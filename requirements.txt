@@ -1,0 +1,25 @@
+# NOC Portal — Python Dependencies
+# Install:  pip install -r requirements.txt
+
+# ── Core framework ────────────────────────────────────
+Flask>=2.3.0
+Werkzeug>=2.3.0
+
+# ── Environment / secrets ─────────────────────────────
+python-dotenv>=1.0.0          # .env file support
+
+# ── Google OAuth (optional) ───────────────────────────
+# Remove if not using Google login
+authlib>=1.3.0
+requests>=2.31.0
+
+# ── Future: ORM upgrade path ──────────────────────────
+# Uncomment when SQLAlchemy is available in your environment:
+# SQLAlchemy>=2.0.0
+# Flask-SQLAlchemy>=3.1.0
+# Flask-Migrate>=4.0.0         # Alembic migrations
+
+# ── NOC Certificate generation ────────────────────────
+reportlab>=4.0.0              # PDF generation (included in most environments)
+# Note: reportlab includes built-in QR code support via reportlab.graphics.barcode.qr
+# No additional qrcode/Pillow dependency required for core functionality

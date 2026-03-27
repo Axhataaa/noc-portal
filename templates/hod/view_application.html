@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% block title %}Application #{{ application.id }}{% endblock %}
+{% block breadcrumb %}Application Review{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Review Application #{{ application.id }}</h1>
+        <p class="page-sub">{{ application.student_name }} — {{ application.company_name }}</p>
+    </div>
+    <a href="{{ url_for('hod.dashboard') }}" class="btn-outline">← Back to Dashboard</a>
+</div>
+
+<div class="detail-layout">
+    <div class="detail-main">
+        <div class="status-banner {{ application.status.lower() }}">
+            <div class="status-banner-icon">
+                {% if application.status == 'Approved' %}✓{% elif application.status == 'Rejected' %}✕{% else %}⏳{% endif %}
+            </div>
+            <div class="status-banner-text">
+                <strong>{{ application.status }}</strong>
+                {% if application.status == 'Pending' %}
+                <span>Awaiting your review</span>
+                {% elif application.status == 'Approved' %}
+                <span>Approved on {{ application.reviewed_at_fmt }}</span>
+                {% else %}
+                <span>Rejected on {{ application.reviewed_at_fmt }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Student Info -->
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Student Information</h3></div>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Full Name</span>
+                    <span class="detail-value">{{ application.student_name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">{{ application.student_email }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Department</span>
+                    <span class="detail-value">{{ application.department }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Branch</span>
+                    <span class="detail-value">{{ application.branch or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Enrollment No.</span>
+                    <span class="detail-value">{{ application.student_enrollment or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Contact Number</span>
+                    <span class="detail-value">{{ application.student_contact or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Academic Year</span>
+                    <span class="detail-value">{{ application.academic_year or '—' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Internship Details -->
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Internship Details</h3></div>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Company</span>
+                    <span class="detail-value">{{ application.company_name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Role</span>
+                    <span class="detail-value">{{ application.internship_role }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Location</span>
+                    <span class="detail-value">{{ application.location or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Mode</span>
+                    <span class="detail-value">{{ application.internship_mode or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Stipend</span>
+                    <span class="detail-value">{{ application.stipend or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Working Hours</span>
+                    <span class="detail-value">{{ application.work_hours or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Start Date</span>
+                    <span class="detail-value">{{ application.start_date_fmt }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">End Date</span>
+                    <span class="detail-value">{{ application.end_date_fmt }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Duration</span>
+                    <span class="detail-value">{{ application.duration_display }}</span>
+                </div>
+                {% if application.company_address %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Company Address</span>
+                    <span class="detail-value">{{ application.company_address }}</span>
+                </div>
+                {% endif %}
+                {% if application.company_website %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Company Website</span>
+                    <span class="detail-value">
+                        <a href="{{ application.company_website }}" target="_blank" rel="noopener"
+                           style="color:var(--color-accent); word-break:break-all;">
+                            {{ application.company_website }}
+                        </a>
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Manager / Supervisor Details -->
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Manager / Supervisor Details</h3></div>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Name</span>
+                    <span class="detail-value">{{ application.manager_name or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Designation</span>
+                    <span class="detail-value">{{ application.manager_designation or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Official Email</span>
+                    <span class="detail-value">
+                        {% if application.manager_email %}
+                        <a href="mailto:{{ application.manager_email }}" style="color:var(--color-accent);">{{ application.manager_email }}</a>
+                        {% else %}—{% endif %}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Phone</span>
+                    <span class="detail-value">{{ application.manager_phone or '—' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offer Letter & Purpose -->
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Offer Letter & NOC Purpose</h3></div>
+            <div class="detail-grid">
+                {% if application.offer_letter_ref %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Offer Letter Reference</span>
+                    <span class="detail-value">{{ application.offer_letter_ref }}</span>
+                </div>
+                {% endif %}
+                {% if application.offer_letter_path %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Uploaded Offer Letter</span>
+                    <span class="detail-value">
+                        <a href="{{ url_for('admin.download_offer_letter', app_id=application.id) }}"
+                           class="btn-outline btn-sm" style="display:inline-flex;align-items:center;gap:0.4rem;text-decoration:none;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                            Download PDF
+                        </a>
+                    </span>
+                </div>
+                {% else %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Uploaded Offer Letter</span>
+                    <span class="detail-value" style="color:var(--text-muted);font-style:italic;">Not uploaded by student</span>
+                </div>
+                {% endif %}
+                {% if application.noc_purpose %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Purpose / Work Description</span>
+                    <span class="detail-value" style="white-space:pre-line;">{{ application.noc_purpose }}</span>
+                </div>
+                {% endif %}
+                {% if application.description %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Additional Description</span>
+                    <span class="detail-value" style="white-space:pre-line;">{{ application.description }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if application.hod_remarks %}
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Your Remarks</h3></div>
+            <div class="remarks-box {{ application.status.lower() }}">
+                <p>{{ application.hod_remarks }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if application.status == 'Pending' %}
+        <!-- Action Panel -->
+        <div class="card action-panel">
+            <div class="card-header"><h3 class="card-title">Take Action</h3></div>
+            <div class="action-panel-body">
+                <button onclick="showApproveModal({{ application.id }}, '{{ application.student_name }}', '{{ application.company_name }}')"
+                        class="btn-approve btn-lg">
+                    ✓ Approve Application
+                </button>
+                <button onclick="showRejectModal({{ application.id }}, '{{ application.student_name }}', '{{ application.company_name }}')"
+                        class="btn-danger btn-lg">
+                    ✕ Reject Application
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="detail-sidebar">
+        <div class="timeline-card">
+            <h4>Review Timeline</h4>
+            <div class="timeline">
+                <div class="timeline-item done">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>Submitted</strong>
+                        <span>{{ application.created_at_fmt }}</span>
+                    </div>
+                </div>
+                <div class="timeline-item {{ 'done' if application.status != 'Pending' else 'active' }}">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>HOD Review</strong>
+                        <span>{{ 'Completed' if application.status != 'Pending' else 'In Progress' }}</span>
+                    </div>
+                </div>
+                <div class="timeline-item {{ application.status.lower() if application.status != 'Pending' else '' }}">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>Final Decision</strong>
+                        <span>{{ application.status if application.status != 'Pending' else 'Pending' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="approve-form-{{ application.id }}" method="POST"
+      action="{{ url_for('hod.approve', app_id=application.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="remarks" id="approve-remarks-{{ application.id }}">
+</form>
+<form id="reject-form-{{ application.id }}" method="POST"
+      action="{{ url_for('hod.reject', app_id=application.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="remarks" id="reject-remarks-{{ application.id }}">
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showApproveModal(appId, student, company) {
+    openModal('✓ Approve Application',
+        `<p>Approve internship for <strong>${student}</strong> at <strong>${company}</strong>?</p>
+         <div class="form-group" style="margin-top:1rem;">
+            <label>Remarks (optional)</label>
+            <textarea id="approve-remarks-input" class="form-input form-textarea" rows="3"
+                      placeholder="Add approval remarks..."></textarea>
+         </div>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-approve" onclick="submitApprove(${appId})">Approve</button>`
+    );
+}
+function showRejectModal(appId, student, company) {
+    openModal('✕ Reject Application',
+        `<p>Reject internship application for <strong>${student}</strong> at <strong>${company}</strong>?</p>
+         <div class="form-group" style="margin-top:1rem;">
+            <label>Rejection Reason <span style="color:var(--color-rejected)">*</span></label>
+            <textarea id="reject-remarks-input" class="form-input form-textarea" rows="3"
+                      placeholder="Required: reason for rejection"></textarea>
+         </div>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-danger" onclick="submitReject(${appId})">Reject</button>`
+    );
+}
+function submitApprove(appId) {
+    const remarks = document.getElementById('approve-remarks-input').value;
+    document.getElementById(`approve-remarks-${appId}`).value = remarks;
+    document.getElementById(`approve-form-${appId}`).submit();
+}
+function submitReject(appId) {
+    const remarks = document.getElementById('reject-remarks-input').value.trim();
+    if (!remarks) { document.getElementById('reject-remarks-input').style.borderColor = 'var(--color-rejected)'; return; }
+    document.getElementById(`reject-remarks-${appId}`).value = remarks;
+    document.getElementById(`reject-form-${appId}`).submit();
+}
+</script>
+{% endblock %}

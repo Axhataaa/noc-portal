@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block title %}My Dashboard{% endblock %}
+{% block breadcrumb %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="welcome-banner">
+    <div class="wb-left">
+        <div class="wb-avatar">{{ current_user.name[0].upper() }}</div>
+        <div>
+            <h1 class="wb-name">Hello, {{ current_user.name.split()[0] }} 👋</h1>
+            <p class="wb-sub">{{ branch_short(current_user.branch) if current_user.branch else (dept_short(current_user.department) if current_user.department else "—") }} &nbsp;·&nbsp; {{ current_user.enrollment or 'No Enrollment No.' }}</p>
+        </div>
+    </div>
+    <a href="{{ url_for('student.apply') }}" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        New Application
+    </a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon total">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ stats.total }}</span>
+            <span class="stat-label">Total Submitted</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon pending">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value pending-text">{{ stats.pending }}</span>
+            <span class="stat-label">Awaiting Decision</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon approved">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value approved-text">{{ stats.approved }}</span>
+            <span class="stat-label">Approved</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon rejected">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/><line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value rejected-text">{{ stats.rejected }}</span>
+            <span class="stat-label">Rejected</span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">My Applications</h2>
+        <span class="badge-count">{{ applications|length }}</span>
+    </div>
+    {% if applications %}
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Company & Role</th>
+                    <th>Duration</th>
+                    <th>Stipend</th>
+                    <th>Status</th>
+                    <th>Submitted</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr class="table-row">
+                    <td class="td-id">#{{ app.id }}</td>
+                    <td>
+                        <div class="company-cell">
+                            <div class="company-avatar">{{ app.company_name[0] }}</div>
+                            <div>
+                                <div class="company-name">{{ app.company_name }}</div>
+                                <div class="company-location">{{ app.internship_role }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ app.duration_display }}</td>
+                    <td>{{ app.stipend or '—' }}</td>
+                    <td>
+                        <span class="status-chip {{ app.status.lower() }}">
+                            {% if app.status == 'Approved' %}✓ {% elif app.status == 'Rejected' %}✕ {% else %}⏳ {% endif %}{{ app.status }}
+                        </span>
+                    </td>
+                    <td class="date-cell">{{ app.created_at_fmt }}</td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="{{ url_for('student.view_app', app_id=app.id) }}" class="btn-icon" title="View details">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                            </a>
+                            {% if app.status == 'Pending' %}
+                            <button onclick="confirmWithdraw({{ app.id }}, '{{ app.company_name }}')" class="btn-icon danger" title="Withdraw">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="2"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2" stroke="currentColor" stroke-width="2"/></svg>
+                            </button>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.5"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>No Applications Yet</h3>
+        <p>You haven't submitted any internship applications yet.</p>
+        <a href="{{ url_for('student.apply') }}" class="btn-primary">Submit First Application</a>
+    </div>
+    {% endif %}
+</div>
+
+{% for app in applications %}{% if app.status == 'Pending' %}
+<form id="withdraw-{{ app.id }}" method="POST" action="{{ url_for('student.delete_app', app_id=app.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"></form>
+{% endif %}{% endfor %}
+
+<style>
+.welcome-banner {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg-surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem 1.75rem;
+    margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;
+}
+.wb-left { display: flex; align-items: center; gap: 1rem; }
+.wb-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--grad-accent); color: #fff;
+    font-size: 1.3rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; flex-shrink: 0;
+}
+.wb-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem; }
+.wb-sub  { font-size: 0.8rem; color: var(--text-secondary); }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function confirmWithdraw(id, company) {
+    openModal('Withdraw Application',
+        `<p>Are you sure you want to withdraw your application to <strong>${company}</strong>?</p>
+         <p class="modal-warning" style="margin-top:0.5rem;">This cannot be undone.</p>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-danger" onclick="document.getElementById('withdraw-${id}').submit()">Yes, Withdraw</button>`
+    );
+}
+</script>
+{% endblock %}

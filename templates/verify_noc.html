@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOC Certificate Verification</title>
+
+    <!-- Flask request access -->
+    {% set verify_clicked = request.args.get('verify') %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* (your entire CSS unchanged) */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --navy:#1B2A4A; --gold:#C9A84C; --pale-gold:#F5EDD6;
+            --green:#22C55E; --red:#EF4444; --text:#1A1A2E;
+            --mid:#4A5568; --bg:#F7F8FC; --surface:#fff;
+            --border:#E5E9F0; --radius:12px;
+        }
+        body { font-family:'Inter',sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column; }
+
+        .topbar { background:var(--navy);color:#fff;padding:0.85rem 2rem;display:flex;justify-content:space-between; }
+        .topbar-brand { font-family:'Cormorant Garamond';font-weight:700;color:#fff;text-decoration:none; }
+        .topbar-note { font-size:0.72rem;color:rgba(255,255,255,0.55); }
+
+        main { flex:1;display:flex;flex-direction:column;align-items:center;padding:3rem 1.5rem;gap:2rem; }
+
+        .verify-hero { text-align:center;max-width:520px; }
+
+        .search-card {
+            background:#fff;border:1px solid #E5E9F0;border-radius:12px;
+            padding:1.75rem 2rem;width:100%;max-width:520px;
+        }
+
+        .search-row { display:flex;gap:0.6rem; }
+
+        .search-input {
+            flex:1;padding:0.7rem 1rem;border:1.5px solid #E5E9F0;border-radius:8px;
+            font-family:'Courier New';background:#F7F8FC;
+        }
+
+        .btn-verify {
+            padding:0.7rem 1.4rem;background:#1B2A4A;color:#fff;
+            border:none;border-radius:8px;cursor:pointer;
+        }
+
+        .result-card {
+            background:#fff;border-radius:12px;padding:2rem;width:100%;max-width:560px;
+            box-shadow:0 4px 24px rgba(0,0,0,0.08);
+        }
+        .valid { border:1.5px solid #22C55E; }
+        .invalid { border:1.5px solid #EF4444; }
+
+        .result-grid { display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.5rem; }
+
+        .result-field label { font-size:0.7rem;color:#4A5568; }
+        .result-field span { font-size:0.9rem;color:#1A1A2E; }
+
+        .verified-badge {
+            display:inline-block;margin-top:10px;
+            background:#DCFCE7;padding:5px 10px;border-radius:20px;
+        }
+
+        .error-box {
+            background:#FEF2F2;border:1px solid #FECACA;
+            padding:1rem;border-radius:8px;color:#991B1B;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <a href="/" class="topbar-brand">NOC Portal</a>
+    <span class="topbar-note">Certificate Verification System</span>
+</div>
+
+<main>
+
+    <div class="verify-hero">
+        <h1>Certificate Verification</h1>
+        <p>Enter a NOC ID to verify authenticity.</p>
+    </div>
+
+    <!-- FORM -->
+    <div class="search-card">
+        <form method="GET">
+            <div class="search-row">
+                <input
+                    type="text"
+                    name="noc_id"
+                    class="search-input"
+                    value="{{ noc_id or '' }}"
+                    placeholder="NOC-2026-000001"
+                >
+
+                <!-- IMPORTANT CHANGE -->
+                <button type="submit" name="verify" value="1" class="btn-verify">
+                    Verify
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- RESULT SHOW ONLY AFTER CLICK -->
+    {% if noc_id and verify_clicked %}
+
+        {% if result %}
+        <div class="result-card valid">
+
+            <h2>✅ Certificate Verified</h2>
+
+            <div class="result-grid">
+                <div class="result-field">
+                    <label>Student Name</label>
+                    <span>{{ result.student_name or '—' }}</span>
+                </div>
+
+                <div class="result-field">
+                    <label>Enrollment</label>
+                    <span>{{ result.student_enrollment or '—' }}</span>
+                </div>
+
+                <div class="result-field">
+                    <label>Company</label>
+                    <span>{{ result.company_name or '—' }}</span>
+                </div>
+
+                <div class="result-field">
+                    <label>Role</label>
+                    <span>{{ result.internship_role or '—' }}</span>
+                </div>
+
+                <div class="result-field">
+                    <label>Duration</label>
+                    <span>{{ result.start_date }} → {{ result.end_date }}</span>
+                </div>
+
+                <div class="result-field">
+                    <label>Status</label>
+                    <span style="color:green;">✓ Approved</span>
+                </div>
+
+                <div class="result-field">
+                    <label>Approval Date</label>
+                    <span>{{ result.approval_date or (result.reviewed_at or '—') }}</span>
+                </div>
+
+                <div class="result-field">
+                    <label>NOC ID</label>
+                    <span>{{ result.noc_id }}</span>
+                </div>
+            </div>
+
+            <div class="verified-badge">
+                ✓ Authenticated by NOC Portal
+            </div>
+
+        </div>
+
+        {% elif error %}
+        <div class="result-card invalid">
+            <h2>❌ Verification Failed</h2>
+            <div class="error-box">{{ error }}</div>
+        </div>
+        {% endif %}
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

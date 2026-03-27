@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 — Access Denied | NOC Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#08090f;--text:#e8eaf2;--text-sec:#7e879e;--gold:#c8a84b;--gold-grad:linear-gradient(135deg,#c8a84b,#dfc27a)}
+        [data-theme="light"]{--bg:#f5f6f9;--text:#111320;--text-sec:#525a72}
+        body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
+        .err-code{font-family:'Cormorant Garamond',serif;font-size:7rem;font-weight:700;background:var(--gold-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:1rem}
+        h1{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;margin-bottom:0.75rem}
+        p{font-size:0.9rem;color:var(--text-sec);margin-bottom:2rem;line-height:1.7}
+        .btns{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.7rem 1.5rem;border-radius:9px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:opacity .15s}
+        .btn-gold{background:var(--gold-grad);color:#110d00}
+        .btn-gold:hover{opacity:.88;color:#110d00}
+        .btn-ghost{border:1px solid rgba(255,255,255,.1);color:var(--text-sec)}
+        .btn-ghost:hover{color:var(--text);border-color:rgba(200,168,75,.3)}
+        [data-theme="light"] .btn-ghost{border-color:rgba(0,0,0,.12);color:var(--text-sec)}
+    </style>
+</head>
+<body>
+    <div>
+        <div class="err-code">403</div>
+        <h1>Access Denied</h1>
+        <p>You don't have permission to view this page.<br>Please log in with the correct account.</p>
+        <div class="btns">
+            <a href="/login" class="btn btn-gold">Sign In</a>
+            <a href="/" class="btn btn-ghost">← Go Home</a>
+        </div>
+    </div>
+    <script>
+        const t=localStorage.getItem('noc-theme')||'dark';
+        document.documentElement.setAttribute('data-theme',t);
+    </script>
+</body>
+</html>

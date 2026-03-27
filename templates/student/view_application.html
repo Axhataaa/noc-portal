@@ -1,0 +1,403 @@
+{% extends 'base.html' %}
+{% block title %}Application #{{ application.id }}{% endblock %}
+{% block breadcrumb %}Application Details{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Application #{{ application.id }}</h1>
+        <p class="page-sub">{{ application.company_name }} — {{ application.internship_role }}</p>
+    </div>
+    <div style="display:flex;gap:0.75rem;">
+        {% if application.status == 'Pending' %}
+        <button onclick="confirmDelete({{ application.id }}, '{{ application.company_name }}')" class="btn-danger">
+            Withdraw
+        </button>
+        {% endif %}
+        <a href="{{ url_for('student.dashboard') }}" class="btn-outline">← Back</a>
+    </div>
+</div>
+
+<div class="detail-layout">
+    <div class="detail-main">
+        <!-- Status Banner -->
+        <div class="status-banner {{ application.status.lower() }}">
+            <div class="status-banner-icon">
+                {% if application.status == 'Approved' %}✓
+                {% elif application.status == 'Rejected' %}✕
+                {% else %}⏳{% endif %}
+            </div>
+            <div class="status-banner-text">
+                <strong>{{ application.status }}</strong>
+                {% if application.status == 'Pending' %}
+                <span>Your application is under review by {{ current_user.department }} HOD</span>
+                {% elif application.status == 'Approved' %}
+                <span>Congratulations! Your internship has been approved.</span>
+                {% else %}
+                <span>Your application was not approved this time.</span>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if application.status == 'Approved' %}
+        <div class="noc-download-bar">
+            <div class="noc-download-info">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" stroke-width="2"/></svg>
+                <div>
+                    {% if application.noc_id %}
+                    <strong>NOC Certificate Ready</strong>
+                    <span>{{ application.noc_id }}</span>
+                    {% else %}
+                    <strong>NOC Certificate</strong>
+                    <span>Generate your NOC for this approved application</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="noc-download-actions">
+                {% if application.noc_id %}
+                <a href="{{ url_for('student.view_noc', app_id=application.id) }}" target="_blank" class="btn-primary" style="font-size:0.82rem;padding:0.5rem 1.1rem;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                    View NOC
+                </a>
+                <a href="{{ url_for('student.download_noc', app_id=application.id) }}" class="btn-outline" style="font-size:0.82rem;padding:0.5rem 1.1rem;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    Download NOC
+                </a>
+                <a href="{{ url_for('auth.verify_noc') }}?noc_id={{ application.noc_id }}" target="_blank" class="btn-outline" style="font-size:0.82rem;padding:0.5rem 0.9rem;">
+                    Verify
+                </a>
+                {% else %}
+                <form method="POST" action="{{ url_for('student.generate_noc', app_id=application.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn-primary" style="font-size:0.82rem;padding:0.5rem 1.1rem;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                        Generate NOC
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        <style>
+        .noc-download-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #86efac;border-radius:12px;padding:1rem 1.4rem;margin-bottom:1.25rem;}
+        .noc-download-info{display:flex;align-items:center;gap:.7rem;color:#166534;}
+        .noc-download-info strong{display:block;font-size:.88rem;font-weight:700;}
+        .noc-download-info span{font-size:.72rem;font-family:monospace;opacity:.8;}
+        .noc-download-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
+        </style>
+        {% endif %}
+
+        <!-- Details -->
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Internship Details</h3></div>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Company</span>
+                    <span class="detail-value">{{ application.company_name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Role</span>
+                    <span class="detail-value">{{ application.internship_role }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Location</span>
+                    <span class="detail-value">{{ application.location or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Mode</span>
+                    <span class="detail-value">{{ application.internship_mode or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Stipend</span>
+                    <span class="detail-value">{{ application.stipend or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Working Hours</span>
+                    <span class="detail-value">{{ application.work_hours or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Start Date</span>
+                    <span class="detail-value">{{ application.start_date_fmt }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">End Date</span>
+                    <span class="detail-value">{{ application.end_date_fmt }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Duration</span>
+                    <span class="detail-value">{{ application.duration_display }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Department</span>
+                    <span class="detail-value">{{ application.department }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Academic Year</span>
+                    <span class="detail-value">{{ application.academic_year or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Your Contact</span>
+                    <span class="detail-value">{{ application.student_contact or '—' }}</span>
+                </div>
+                {% if application.company_address %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Company Address</span>
+                    <span class="detail-value">{{ application.company_address }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Manager Details -->
+        {% if application.manager_name or application.manager_email %}
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Manager / Supervisor</h3></div>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Name</span>
+                    <span class="detail-value">{{ application.manager_name or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Designation</span>
+                    <span class="detail-value">{{ application.manager_designation or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">{{ application.manager_email or '—' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Phone</span>
+                    <span class="detail-value">{{ application.manager_phone or '—' }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Offer Letter & Purpose -->
+        {% if application.offer_letter_ref or application.noc_purpose %}
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">Offer Letter & NOC Purpose</h3></div>
+            <div class="detail-grid">
+                {% if application.offer_letter_ref %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Offer Letter Reference</span>
+                    <span class="detail-value">{{ application.offer_letter_ref }}</span>
+                </div>
+                {% endif %}
+                {% if application.noc_purpose %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Purpose / Work Description</span>
+                    <span class="detail-value" style="white-space:pre-line;">{{ application.noc_purpose }}</span>
+                </div>
+                {% endif %}
+                {% if application.description %}
+                <div class="detail-item full-width">
+                    <span class="detail-label">Additional Notes</span>
+                    <span class="detail-value" style="white-space:pre-line;">{{ application.description }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Uploaded Offer Letter -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Offer Letter</h3>
+                {% if application.offer_letter_path %}
+                <span class="status-chip approved" style="font-size:0.7rem;">✓ Uploaded</span>
+                {% else %}
+                <span class="status-chip pending" style="font-size:0.7rem;">Not uploaded</span>
+                {% endif %}
+            </div>
+            <div style="padding:1.25rem 1.5rem;">
+
+                {% if application.offer_letter_path %}
+                <!-- File row: icon + clickable filename only — clicking name opens PDF -->
+                <div class="upload-preview-card" style="margin-bottom:{% if application.status == 'Pending' %}1rem{% else %}0{% endif %};">
+                    <div class="upload-preview-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8"/></svg>
+                    </div>
+                    <div class="upload-preview-info">
+                        <a href="{{ url_for('admin.download_offer_letter', app_id=application.id) }}"
+                           class="upload-preview-name" target="_blank" rel="noopener"
+                           title="Click to open offer letter PDF">
+                            {{ application.offer_letter_original_name or 'Offer Letter.pdf' }}
+                        </a>
+                        <span class="upload-preview-meta">
+                            Uploaded {{ application.created_at_fmt }}
+                            {% if application.status != 'Pending' %} · Read-only{% endif %}
+                        </span>
+                    </div>
+                    {% if application.status == 'Pending' %}
+                    <label for="offer_letter_pdf_view"
+                           class="upload-remove-btn" title="Replace with a different PDF"
+                           style="cursor:pointer;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Replace
+                    </label>
+                    {% endif %}
+                </div>
+
+                {% else %}
+                <p style="font-size:0.83rem;color:var(--text-secondary);margin-bottom:1rem;">No offer letter uploaded yet.</p>
+                {% endif %}
+
+                {% if application.status == 'Pending' %}
+                <!-- Replace / upload form — shown inline, triggered by label above or hidden input below -->
+                <form method="POST"
+                      action="{{ url_for('student.upload_offer_letter', app_id=application.id) }}"
+                      enctype="multipart/form-data"
+                      id="replaceUploadForm">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <!-- Hidden file input triggered by "Replace" label -->
+                    <input type="file" id="offer_letter_pdf_view" name="offer_letter_pdf"
+                           accept=".pdf,application/pdf" style="display:none;">
+
+                    <!-- Preview card — appears after file is chosen -->
+                    <div id="viewPreviewCard" class="upload-preview-card" style="display:none;">
+                        <div class="upload-preview-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8"/></svg>
+                        </div>
+                        <div class="upload-preview-info">
+                            <a class="upload-preview-name" id="viewPreviewName" href="#"
+                               target="_blank" rel="noopener"
+                               title="Open new PDF in tab to verify before uploading"
+                               style="text-decoration:underline;color:inherit;">—</a>
+                            <span class="upload-preview-meta" id="viewPreviewMeta">—</span>
+                        </div>
+                        <button type="button" class="upload-remove-btn" id="viewRemoveBtn">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                            Cancel
+                        </button>
+                    </div>
+
+                    <!-- Confirm button — hidden until file chosen -->
+                    <button type="submit" id="viewUploadBtn" class="btn-primary btn-sm"
+                            style="display:none;margin-top:0.75rem;gap:0.4rem;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Save Replacement
+                    </button>
+
+                </form>
+
+                <script>
+                (function() {
+                    var input  = document.getElementById('offer_letter_pdf_view');
+                    var card   = document.getElementById('viewPreviewCard');
+                    var nameEl = document.getElementById('viewPreviewName');
+                    var metaEl = document.getElementById('viewPreviewMeta');
+                    var btn    = document.getElementById('viewUploadBtn');
+                    var remBtn = document.getElementById('viewRemoveBtn');
+
+                    if (!input) return;
+
+                    function fmtSize(b) {
+                        if (b < 1024) return b + ' B';
+                        if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+                        return (b/1048576).toFixed(2) + ' MB';
+                    }
+
+                    var objURL = null;
+
+                    // Fires when student picks a replacement file
+                    input.addEventListener('change', function() {
+                        if (this.files && this.files[0]) {
+                            if (objURL) URL.revokeObjectURL(objURL);
+                            objURL = URL.createObjectURL(this.files[0]);
+                            nameEl.textContent = this.files[0].name;
+                            nameEl.href        = objURL;
+                            metaEl.textContent = fmtSize(this.files[0].size) + ' · PDF';
+                            card.style.display = 'flex';
+                            btn.style.display  = 'inline-flex';
+                        }
+                    });
+
+                    // Cancel — discard the chosen replacement
+                    if (remBtn) remBtn.addEventListener('click', function() {
+                        if (objURL) { URL.revokeObjectURL(objURL); objURL = null; }
+                        input.value        = '';
+                        card.style.display = 'none';
+                        btn.style.display  = 'none';
+                    });
+                }());
+                </script>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if application.hod_remarks %}
+        <div class="card">
+            <div class="card-header"><h3 class="card-title">HOD Remarks</h3></div>
+            <div class="remarks-box {{ application.status.lower() }}">
+                <div class="remarks-icon">
+                    {% if application.status == 'Approved' %}✓{% else %}✕{% endif %}
+                </div>
+                <p>{{ application.hod_remarks }}</p>
+                {% if application.reviewed_at %}
+                <span class="remarks-date">{{ application.reviewed_at_fmt }}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="detail-sidebar">
+        <div class="timeline-card">
+            <h4>Timeline</h4>
+            <div class="timeline">
+                <div class="timeline-item done">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>Submitted</strong>
+                        <span>{{ application.created_at_fmt }}</span>
+                    </div>
+                </div>
+                <div class="timeline-item {{ 'done' if application.status != 'Pending' else 'active' }}">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>Under Review</strong>
+                        <span>{{ 'Completed' if application.status != 'Pending' else 'In Progress' }}</span>
+                    </div>
+                </div>
+                <div class="timeline-item {{ application.status.lower() if application.status != 'Pending' else '' }}">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <strong>Decision</strong>
+                        <span>{{ application.status if application.status != 'Pending' else 'Awaiting' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="delete-form-{{ application.id }}" method="POST"
+      action="{{ url_for('student.delete_app', app_id=application.id) }}" style="display:none;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"></form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function confirmDelete(appId, company) {
+    openModal(
+        'Withdraw Application',
+        `<p>Are you sure you want to withdraw your application for <strong>${company}</strong>?</p>
+         <p class="modal-warning">This action cannot be undone.</p>`,
+        `<button class="btn-outline" onclick="closeModal()">Cancel</button>
+         <button class="btn-danger" onclick="document.getElementById('delete-form-${appId}').submit()">Withdraw</button>`
+    );
+}
+</script>
+{% endblock %}
+
+<style>
+.upload-drop-zone-inline {
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    background: var(--bg-elevated);
+    transition: border-color 0.2s;
+}
+.upload-drop-zone-inline:hover { border-color: var(--color-accent); }
+</style>

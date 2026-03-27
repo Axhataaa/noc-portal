@@ -27,13 +27,24 @@ run.bat
 
 ---
 
+## ✨ Key Highlights
+
+- 🔐 Secure authentication (OAuth + session-based)
+- 👥 Role-based dashboards (Admin / HOD / Student)
+- 📄 Automated NOC generation
+- 🔍 QR code verification system
+- 📁 Secure document upload (PDF validation)
+- ⚡ Modular, production-ready architecture
+
+---
+
 ## Demo Credentials
 
 | Role    | Email              | Password    |
 |---------|--------------------|-------------|
 | Admin   | admin@noc.edu      | admin123    |
 | HOD CS  | hod.cs@noc.edu     | hod123      |
-| Student | arjun@noc.edu      | student123  |
+| Student | student@noc.edu      | student123  |
 
 ---
 
@@ -149,7 +160,7 @@ from models import User, Application, AuditLog
 
 # Repository pattern
 user = User.get_by_id(1)
-user = User.get_by_email('arjun@noc.edu')
+user = User.get_by_email('student@noc.edu')
 apps = Application.for_student(student_id=1)
 apps = Application.for_department('Computer Science', status='Pending')
 
@@ -269,9 +280,9 @@ GET /api/v1/applications?status=Pending&page=1
 # Required
 SECRET_KEY=change-me-in-production-use-a-long-random-string
 
-# Registration codes (change before deployment)
-HOD_SECRET=HOD@NOC2024
-ADMIN_SECRET=ADMIN@NOC2024
+# Registration codes 
+HOD_SECRET=hod_secret_code
+ADMIN_SECRET=admin_secret_code
 
 # File uploads
 MAX_UPLOAD_MB=5

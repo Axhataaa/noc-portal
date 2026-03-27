@@ -34,7 +34,9 @@ run.bat
 | ------- | --------------- | ---------- |
 | Admin   | admin@noc.edu   | admin123   |
 | HOD CS  | hod.cs@noc.edu  | hod123     |
-| Student | akshata@noc.edu | student123 |
+| Student | student@noc.edu | student123 |
+
+> ⚠️ These are demo credentials for testing purposes only.
 
 ---
 
@@ -150,7 +152,7 @@ from models import User, Application, AuditLog
 
 # Repository pattern
 user = User.get_by_id(1)
-user = User.get_by_email('akshata@noc.edu')
+user = User.get_by_email('student@noc.edu')
 apps = Application.for_student(student_id=1)
 apps = Application.for_department('Information Technology', status='Pending')
 

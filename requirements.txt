@@ -23,3 +23,5 @@ requests>=2.31.0
 reportlab>=4.0.0              # PDF generation (included in most environments)
 # Note: reportlab includes built-in QR code support via reportlab.graphics.barcode.qr
 # No additional qrcode/Pillow dependency required for core functionality
+
+qrcode[pil]

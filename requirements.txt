@@ -25,3 +25,4 @@ reportlab>=4.0.0              # PDF generation (included in most environments)
 # No additional qrcode/Pillow dependency required for core functionality
 
 qrcode[pil]
+psycopg2-binary

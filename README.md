@@ -19,6 +19,7 @@ python app.py
 ```
 
 **Windows (with Google OAuth):**
+
 ```
 run.bat
 ```
@@ -40,11 +41,11 @@ run.bat
 
 ## Demo Credentials
 
-| Role    | Email              | Password    |
-|---------|--------------------|-------------|
-| Admin   | admin@noc.edu      | admin123    |
-| HOD CS  | hod.cs@noc.edu     | hod123      |
-| Student | student@noc.edu      | student123  |
+| Role    | Email           | Password   |
+| ------- | --------------- | ---------- |
+| Admin   | admin@noc.edu   | admin123   |
+| HOD CS  | hod.cs@noc.edu  | hod123     |
+| Student | student@noc.edu | student123 |
 
 ---
 
@@ -127,15 +128,15 @@ noc_portal/
 
 ### Layer Responsibilities
 
-| Layer | Files | Responsibility |
-|-------|-------|----------------|
-| **Config** | `config/config.py` | All settings from env vars |
-| **Models** | `models/models.py` | Data contracts, schema docs, repository methods |
-| **Database** | `database/db.py` | SQLite connection, schema, migrations |
-| **Services** | `services/business_logic.py` | Domain logic, validation, orchestration |
-| **Routes** | `routes/*.py` | HTTP handling — thin wrappers over services |
-| **API** | `api/endpoints.py` | JSON REST endpoints |
-| **Utils** | `utils/*.py` | Cross-cutting: auth, CSRF, uploads, helpers |
+| Layer        | Files                        | Responsibility                                  |
+| ------------ | ---------------------------- | ----------------------------------------------- |
+| **Config**   | `config/config.py`           | All settings from env vars                      |
+| **Models**   | `models/models.py`           | Data contracts, schema docs, repository methods |
+| **Database** | `database/db.py`             | SQLite connection, schema, migrations           |
+| **Services** | `services/business_logic.py` | Domain logic, validation, orchestration         |
+| **Routes**   | `routes/*.py`                | HTTP handling — thin wrappers over services     |
+| **API**      | `api/endpoints.py`           | JSON REST endpoints                             |
+| **Utils**    | `utils/*.py`                 | Cross-cutting: auth, CSRF, uploads, helpers     |
 
 ### Data Flow
 
@@ -162,7 +163,7 @@ from models import User, Application, AuditLog
 user = User.get_by_id(1)
 user = User.get_by_email('student@noc.edu')
 apps = Application.for_student(student_id=1)
-apps = Application.for_department('Computer Science', status='Pending')
+apps = Application.for_department('Information Technology', status='Pending')
 
 # Relationships (lazy-loaded)
 student  = application.get_student()   # → User
@@ -207,16 +208,16 @@ ok, msg = UserService.delete_user(uid, acting_user_id)
 
 All endpoints use session auth (same as the web UI). Prefix: `/api/v1`
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/health` | None | Health check |
-| GET | `/applications` | Any | List apps (role-scoped) |
-| GET | `/applications/<id>` | Any | Single application |
-| GET | `/applications/all` | Any | Alias for `/applications` |
-| GET | `/status/<id>` | Any | Application status only |
-| GET | `/users` | Admin | All users |
-| GET | `/users/<id>` | Admin | Single user |
-| GET | `/stats` | Any | Counts (role-scoped) |
+| Method | Endpoint             | Auth  | Description               |
+| ------ | -------------------- | ----- | ------------------------- |
+| GET    | `/health`            | None  | Health check              |
+| GET    | `/applications`      | Any   | List apps (role-scoped)   |
+| GET    | `/applications/<id>` | Any   | Single application        |
+| GET    | `/applications/all`  | Any   | Alias for `/applications` |
+| GET    | `/status/<id>`       | Any   | Application status only   |
+| GET    | `/users`             | Admin | All users                 |
+| GET    | `/users/<id>`        | Admin | Single user               |
+| GET    | `/stats`             | Any   | Counts (role-scoped)      |
 
 **Example responses:**
 
@@ -239,22 +240,26 @@ GET /api/v1/applications?status=Pending&page=1
 ## Document Upload (Offer Letter)
 
 ### Student flow
+
 1. Fill the application form — Section 4 contains the PDF upload field (required)
 2. Submit — PDF is validated and saved; application is linked to the file
 3. View application detail → download own offer letter; upload replacement on pending apps
 
 ### Validation
+
 - Extension must be `.pdf`
 - First 4 bytes must be `%PDF` (magic bytes — rejects disguised executables)
 - Max 5 MB (configurable via `MAX_UPLOAD_MB` in `.env`)
 - `werkzeug.utils.secure_filename` strips path traversal
 
 ### Storage
+
 - Saved as `offer_<app_id>_<student_id>_<uuid4>.pdf` in `uploads/`
 - Database stores filename only — never full system path
 - Served via controlled Flask route (`/admin/offer-letter/<app_id>`)
 
 ### HOD / Admin access
+
 - Download button on application detail page (HOD: own dept only)
 - Download icon in admin applications table
 
@@ -262,15 +267,15 @@ GET /api/v1/applications?status=Pending&page=1
 
 ## Security
 
-| Feature | Implementation |
-|---------|---------------|
-| Passwords | PBKDF2-SHA256 via Werkzeug |
-| Sessions | `SESSION_COOKIE_HTTPONLY=True`, `SAMESITE=Lax`, 8h lifetime |
-| CSRF | Synchronizer token in all POST forms; `validate_csrf_token()` in all POST routes |
-| File uploads | Extension + magic bytes + `secure_filename` + UUID naming |
-| Security headers | `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `X-XSS-Protection` |
-| Role enforcement | `@login_required` + `@role_required('role')` decorators on every route |
-| Secrets | All in `.env`, never hardcoded |
+| Feature          | Implementation                                                                   |
+| ---------------- | -------------------------------------------------------------------------------- |
+| Passwords        | PBKDF2-SHA256 via Werkzeug                                                       |
+| Sessions         | `SESSION_COOKIE_HTTPONLY=True`, `SAMESITE=Lax`, 8h lifetime                      |
+| CSRF             | Synchronizer token in all POST forms; `validate_csrf_token()` in all POST routes |
+| File uploads     | Extension + magic bytes + `secure_filename` + UUID naming                        |
+| Security headers | `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `X-XSS-Protection`   |
+| Role enforcement | `@login_required` + `@role_required('role')` decorators on every route           |
+| Secrets          | All in `.env`, never hardcoded                                                   |
 
 ---
 
@@ -280,7 +285,7 @@ GET /api/v1/applications?status=Pending&page=1
 # Required
 SECRET_KEY=change-me-in-production-use-a-long-random-string
 
-# Registration codes 
+# Registration codes
 HOD_SECRET=hod_secret_code
 ADMIN_SECRET=admin_secret_code
 

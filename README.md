@@ -47,8 +47,6 @@ run.bat
 | HOD CS  | hod.cs@noc.edu  | hod123     |
 | Student | student@noc.edu | student123 |
 
-> ⚠️ These are demo credentials for testing purposes only.
-
 ---
 
 ## Project Structure
@@ -287,9 +285,10 @@ GET /api/v1/applications?status=Pending&page=1
 # Required
 SECRET_KEY=change-me-in-production-use-a-long-random-string
 
-# Registration codes (change before deployment)
-HOD_SECRET=HOD@NOC2026
-ADMIN_SECRET=ADMIN@NOC2026
+# Registration codes
+HOD_SECRET=hod_secret_code
+ADMIN_SECRET=admin_secret_code
+
 
 # File uploads
 MAX_UPLOAD_MB=5

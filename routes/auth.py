@@ -169,7 +169,6 @@ def google_login():
 
     import os
     BASE_URL = os.getenv("BASE_URL")
-    print("BASE_URL:", BASE_URL)
 
     redirect_uri = f"{BASE_URL}/auth/google/callback"
     print("REDIRECT_URI:", redirect_uri)

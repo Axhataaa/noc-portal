@@ -10,8 +10,6 @@ Usage:
 """
 import os
 
-BASE_URL = os.getenv("BASE_URL")
-
 # Load .env automatically if python-dotenv is installed
 try:
     from dotenv import load_dotenv
@@ -58,7 +56,7 @@ class Config:
 
     # ── NOC Certificate settings ─────────────────────────────────────────────
     INSTITUTE_NAME = os.environ.get('INSTITUTE_NAME', 'Institute of Technology')
-    BASE_URL       = os.environ.get('BASE_URL', 'http://localhost:5000')
+    BASE_URL = os.environ.get('BASE_URL')
     # ─────────────────────────────────────────────────────────────────────────
     # ── Branch → Department mappings ─────────────────────────────
     BRANCH_TO_DEPT = {

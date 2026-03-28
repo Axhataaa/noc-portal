@@ -10,6 +10,8 @@ Usage:
 """
 import os
 
+BASE_URL = os.getenv("BASE_URL")
+
 # Load .env automatically if python-dotenv is installed
 try:
     from dotenv import load_dotenv

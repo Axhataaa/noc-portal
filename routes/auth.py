@@ -165,10 +165,13 @@ def google_login():
         return redirect(url_for('auth.login'))
     if current_user():
         return redirect(url_for('auth.dashboard_redirect'))
-    google = current_app.extensions['authlib.integrations.flask_client'].google
-    redirect_uri = url_for('auth.google_callback', _external=True)
-    return google.authorize_redirect(redirect_uri)
 
+    google = current_app.extensions['authlib.integrations.flask_client'].google
+
+    import os
+    redirect_uri = f"{os.getenv('BASE_URL')}/auth/google/callback"
+
+    return google.authorize_redirect(redirect_uri)
 
 @auth_bp.route('/auth/google/callback')
 def google_callback():

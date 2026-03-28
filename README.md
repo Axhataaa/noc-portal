@@ -28,6 +28,17 @@ run.bat
 
 ---
 
+## ✨ Key Highlights
+
+- 🔐 Secure authentication (OAuth + session-based)
+- 👥 Role-based dashboards (Admin / HOD / Student)
+- 📄 Automated NOC generation
+- 🔍 QR code verification system
+- 📁 Secure document upload (PDF validation)
+- ⚡ Modular, production-ready architecture
+
+---
+
 ## Demo Credentials
 
 | Role    | Email           | Password   |

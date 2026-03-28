@@ -6,6 +6,12 @@ sets up Jinja globals, security headers, and boots the database.
 
 Run:  python app.py
 """
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
+from flask import Flask
+from config.config import Config
+
 import os
 from datetime import datetime
 from flask import Flask, render_template
@@ -25,8 +31,9 @@ def create_app():
     # ── Load config ───────────────────────────────────
     from config.config import Config   # canonical path (settings.py re-exports this)
     app.config.from_object(Config)
+    print("CONFIG CLIENT ID:", app.config.get('GOOGLE_CLIENT_ID'))
 
-    app.config['BASE_URL'] = "http://localhost:5000"
+    app.config['BASE_URL'] = os.environ.get("BASE_URL", "http://localhost:5000")
 
     # ── Google OAuth setup (optional) ─────────────────
     google_enabled = bool(
@@ -144,4 +151,8 @@ if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
     print("\n  NOC Portal starting...")
     print("  Open your browser at: http://localhost:5000\n")
-    app.run(debug=debug_mode, port=5000, host='0.0.0.0')
+    app.run(
+        debug=debug_mode,
+        host='0.0.0.0',
+        port=int(os.environ.get("PORT", 5000))
+    )

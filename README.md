@@ -90,7 +90,7 @@ noc_portal/
 │                                   /api/v1/applications
 │                                   /api/v1/applications/<id>
 │                                   /api/v1/applications/all
-│                                   /api/v1/status/<id>          ← NEW
+│                                   /api/v1/status/<id>          
 │                                   /api/v1/users
 │                                   /api/v1/users/<id>
 │                                   /api/v1/stats

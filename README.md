@@ -288,8 +288,8 @@ GET /api/v1/applications?status=Pending&page=1
 SECRET_KEY=change-me-in-production-use-a-long-random-string
 
 # Registration codes (change before deployment)
-HOD_SECRET=HOD@NOC2024
-ADMIN_SECRET=ADMIN@NOC2024
+HOD_SECRET=HOD@NOC2026
+ADMIN_SECRET=ADMIN@NOC2026
 
 # File uploads
 MAX_UPLOAD_MB=5

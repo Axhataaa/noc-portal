@@ -22,7 +22,7 @@ class Config:
     """Production-safe configuration class."""
 
     # ── Flask core ────────────────────────────────────────────────
-    SECRET_KEY              = os.environ.get('SECRET_KEY', 'noc-portal-secret-2024-changeme')
+    SECRET_KEY              = os.environ.get('SECRET_KEY', 'nocPortal@1304_secureKey_!Ak')
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
     PERMANENT_SESSION_LIFETIME = 28800           # 8 hours in seconds
@@ -40,8 +40,8 @@ class Config:
     PER_PAGE = 20
 
     # ── Registration secret codes ─────────────────────────────────
-    HOD_SECRET   = os.environ.get('HOD_SECRET',   'HOD@NOC2024')
-    ADMIN_SECRET = os.environ.get('ADMIN_SECRET', 'ADMIN@NOC2024')
+    HOD_SECRET   = os.environ.get('HOD_SECRET',   'HOD@NOC2026')
+    ADMIN_SECRET = os.environ.get('ADMIN_SECRET', 'ADMIN@NOC2026')
 
     # ── Google OAuth (optional) ───────────────────────────────────
     GOOGLE_CLIENT_ID     = os.environ.get('GOOGLE_CLIENT_ID', '')

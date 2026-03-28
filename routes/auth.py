@@ -166,7 +166,7 @@ def google_login():
     if current_user():
         return redirect(url_for('auth.dashboard_redirect'))
     google = current_app.extensions['authlib.integrations.flask_client'].google
-    redirect_uri = 'http://localhost:5000/auth/google/callback'
+    redirect_uri = url_for('auth.google_callback', _external=True)
     return google.authorize_redirect(redirect_uri)
 
 

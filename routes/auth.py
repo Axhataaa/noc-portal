@@ -156,7 +156,6 @@ def dashboard_redirect():
 
 
 # ── Google OAuth ──────────────────────────────────────
-
 @auth_bp.route('/auth/google/login')
 def google_login():
     google_oauth_enabled = current_app.config.get('GOOGLE_OAUTH_ENABLED', False)
@@ -169,9 +168,14 @@ def google_login():
     google = current_app.extensions['authlib.integrations.flask_client'].google
 
     import os
-    redirect_uri = f"{os.getenv('BASE_URL')}/auth/google/callback"
+    BASE_URL = os.getenv("BASE_URL")
+    print("BASE_URL:", BASE_URL)
+
+    redirect_uri = f"{BASE_URL}/auth/google/callback"
+    print("REDIRECT_URI:", redirect_uri)
 
     return google.authorize_redirect(redirect_uri)
+
 
 @auth_bp.route('/auth/google/callback')
 def google_callback():

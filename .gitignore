@@ -1,14 +1,17 @@
 # Environment & secrets
 .env
 
-# Database
+# Database (local only)
 *.db
 *.sqlite
 
-# Uploaded files (never commit)
+# Uploaded files & generated assets
 uploads/
 uploads/certificates/
 static/qr/
+
+# Logs (runtime generated)
+*.log
 
 # Python cache
 __pycache__/
@@ -22,11 +25,11 @@ venv/
 env/
 .venv/
 
-# IDE
+# IDE / Editor
 .vscode/
 .idea/
 *.swp
 
-# OS
+# OS files
 .DS_Store
 Thumbs.db

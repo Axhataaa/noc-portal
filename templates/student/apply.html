@@ -188,60 +188,106 @@
                         <p>Upload your offer letter PDF and describe the work you'll be doing</p>
                     </div>
                 </div>
+
                 <div class="form-fields">
+
                     <div class="form-group">
                         <label for="offer_letter_ref">Offer Letter Reference Number / Date</label>
                         <input type="text" id="offer_letter_ref" name="offer_letter_ref" class="form-input"
-                               placeholder="e.g. OL/2026/INT/0042  or  Dated: 10 March 2026"
-                               value="{{ form.offer_letter_ref or '' }}" maxlength="200">
-                        <span class="field-hint">Found on the header or footer of your offer letter</span>
+                            placeholder="e.g. OL/2026/INT/0042  or  Dated: 10 March 2026"
+                            value="{{ form.offer_letter_ref or '' }}" maxlength="200">
+                        <span class="field-hint">
+                            Found on the header or footer of your offer letter
+                        </span>
                     </div>
-                    <div class="form-group">
-                        <label for="offer_letter_pdf">Upload Offer Letter (PDF) <span class="req">*</span></label>
 
-                        <!-- Drop zone — hidden once a file is chosen -->
+                    <div class="form-group">
+                        <label for="offer_letter_pdf">Upload Offer Letter (PDF)</label>
+
+                        <!-- Drop zone -->
                         <div class="upload-drop-zone {% if errors.offer_letter_pdf %}upload-error{% endif %}" id="uploadZone">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="color:var(--text-muted);margin-bottom:0.5rem;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            <p style="font-size:0.83rem;color:var(--text-secondary);margin-bottom:0.25rem;">Drag &amp; drop your PDF here, or <span style="color:var(--color-accent);font-weight:600;">click to browse</span></p>
-                            <p style="font-size:0.72rem;color:var(--text-muted);">PDF only &nbsp;·&nbsp; Max 5 MB &nbsp;·&nbsp; Only one file</p>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                                style="color:var(--text-muted);margin-bottom:0.5rem;">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
+                                    stroke="currentColor" stroke-width="1.8"
+                                    stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+
+                            <p style="font-size:0.83rem;color:var(--text-secondary);margin-bottom:0.25rem;">
+                                Drag &amp; drop your PDF here, or 
+                                <span style="color:var(--color-accent);font-weight:600;">click to browse</span>
+                            </p>
+
+                            <p style="font-size:0.72rem;color:var(--text-muted);">
+                                PDF only · Max 5 MB · Only one file
+                            </p>
+
+                            <!-- subtle guidance -->
+                            <p style="font-size:0.72rem;color:var(--text-muted);margin-top:0.3rem;">
+                                Upload if available for smoother approval
+                            </p>
+
                             <input type="file" id="offer_letter_pdf" name="offer_letter_pdf"
-                                   accept=".pdf,application/pdf" required
-                                   style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
+                                accept=".pdf,application/pdf"
+                                style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;">
                         </div>
 
-                        <!-- File preview card — shown after selection -->
+                        <!-- File preview card -->
                         <div id="filePreviewCard" style="display:none;" class="upload-preview-card">
                             <div class="upload-preview-icon">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8"/></svg>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8"/>
+                                    <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8"/>
+                                </svg>
                             </div>
+
                             <div class="upload-preview-info">
-                                <a  class="upload-preview-name" id="previewName" href="#" target="_blank" rel="noopener" title="Click to preview PDF" style="text-decoration:none;color:inherit;">—</a>
+                                <a class="upload-preview-name" id="previewName" href="#" target="_blank" rel="noopener"
+                                title="Click to preview PDF" style="text-decoration:none;color:inherit;">—</a>
                                 <span class="upload-preview-meta" id="previewMeta">—</span>
                             </div>
-                            <button type="button" class="upload-remove-btn" id="removeFileBtn" title="Remove and choose a different file">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+
+                            <button type="button" class="upload-remove-btn" id="removeFileBtn"
+                                    title="Remove and choose a different file">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                    <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
                                 Remove
                             </button>
                         </div>
 
                         {% if errors.offer_letter_pdf %}
-                        <span class="field-error-msg">{{ errors.offer_letter_pdf }}</span>
+                            <span class="field-error-msg">{{ errors.offer_letter_pdf }}</span>
                         {% endif %}
-                        <span class="field-hint">Only one offer letter allowed per application. You can replace it before submitting.</span>
+
+                        <span class="field-hint">
+                            Only one offer letter allowed per application. You can replace it before submitting.
+                        </span>
                     </div>
 
                     <div class="form-group">
-                        <label for="noc_purpose">Purpose of NOC / What You'll Be Working On <span class="req">*</span></label>
-                        <textarea id="noc_purpose" name="noc_purpose" class="form-input form-textarea {% if errors.noc_purpose %}field-error{% endif %}"
-                                  placeholder="Briefly state why you need the NOC and what project or team you will be joining..."
-                                  rows="4" maxlength="800">{{ form.noc_purpose or '' }}</textarea>
-                        {% if errors.noc_purpose %}<span class="field-error-msg">{{ errors.noc_purpose }}</span>{% endif %}
-                        <div class="char-count"><span id="nocCount">{{ (form.noc_purpose or '')|length }}</span>/800</div>
+                        <label for="noc_purpose">
+                            Purpose of NOC / What You'll Be Working On <span class="req">*</span>
+                        </label>
+                        <textarea id="noc_purpose" name="noc_purpose"
+                                class="form-input form-textarea {% if errors.noc_purpose %}field-error{% endif %}"
+                                placeholder="Briefly state why you need the NOC and what project or team you will be joining..."
+                                rows="4" maxlength="800">{{ form.noc_purpose or '' }}</textarea>
+
+                        {% if errors.noc_purpose %}
+                            <span class="field-error-msg">{{ errors.noc_purpose }}</span>
+                        {% endif %}
+
+                        <div class="char-count">
+                            <span id="nocCount">{{ (form.noc_purpose or '')|length }}</span>/800
+                        </div>
                     </div>
+
                 </div>
             </div>
 
-            <!-- ⑤ Duration & Compensation -->
+            <!-- Duration & Compensation -->
             <div class="form-section">
                 <div class="form-section-header">
                     <div class="section-num {% if errors.start_date or errors.end_date %}section-num-error{% endif %}">5</div>

@@ -122,17 +122,20 @@ def apply():
 
         # Offer letter PDF is compulsory at submission time
         uploaded_file = request.files.get('offer_letter_pdf')
-        if False:  # offer letter is now optional
-            errors['offer_letter_pdf'] = 'Offer letter PDF is required.'
-        else:
+
+        if uploaded_file and uploaded_file.filename:
             max_bytes = current_app.config.get('MAX_UPLOAD_BYTES', 5 * 1024 * 1024)
+
             uploaded_file.stream.seek(0, 2)
             file_size = uploaded_file.stream.tell()
             uploaded_file.stream.seek(0)
+
             if file_size > max_bytes:
                 errors['offer_letter_pdf'] = f'File exceeds maximum size ({max_bytes // (1024*1024)} MB).'
+
             elif not validate_pdf(uploaded_file):
                 errors['offer_letter_pdf'] = 'Only valid PDF files are accepted.'
+
 
         if s_str and e_str and 'start_date' not in errors and 'end_date' not in errors:
             try:

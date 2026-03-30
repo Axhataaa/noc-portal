@@ -104,6 +104,11 @@ class User:
     is_active:  int            = field(default=1)
     created_at: Optional[str]  = field(default=None)
 
+    # re-verification system
+    verification_required: int = field(default=0)
+    is_verified: int = field(default=1)
+    last_verified_at: Optional[str] = field(default=None)
+
     # ── Convenience properties ────────────────────────────────────
     @property
     def is_student(self) -> bool:
@@ -138,6 +143,9 @@ class User:
             enrollment = d.get('enrollment'),
             is_active  = d.get('is_active', 1),
             created_at = d.get('created_at'),
+            verification_required = d.get('verification_required', 0),
+            is_verified = d.get('is_verified', 1),
+            last_verified_at = d.get('last_verified_at'),
         )
 
     @classmethod
@@ -170,6 +178,24 @@ class User:
         else:
             rows = db_query("SELECT * FROM users ORDER BY created_at DESC")
         return [cls.from_dict(dict(r)) for r in rows]
+    
+    @classmethod
+    def force_reverify(cls, user_ids: List[int]):
+        """Force re-verification for selected users (HOD/Admin only)."""
+        from database.db import db_query
+
+        for uid in user_ids:
+            user = cls.get_by_id(uid)
+
+            # skip students
+            if not user or user.role == 'student':
+                continue
+
+            db_query(
+                "UPDATE users SET verification_required=1, is_verified=0 WHERE id=?",
+                (uid,),
+                commit=True
+            )
 
     def to_dict(self, include_password=False) -> dict:
         """Serialize to dict. Excludes password hash by default."""

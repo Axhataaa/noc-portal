@@ -69,3 +69,20 @@ def paginate(items, page, per_page=20):
     page      = min(page, total_pgs)
     start     = (page - 1) * per_page
     return items[start:start + per_page], total_pgs, page
+
+
+def get_setting(key):
+    """Retrieve a value from system_settings by key."""
+    from database.db import db_query
+    row = db_query("SELECT value FROM system_settings WHERE key=?", (key,), one=True)
+    return row['value'] if row else None
+
+
+def set_setting(key, value):
+    """Insert or update a value in system_settings."""
+    from database.db import db_query
+    db_query(
+        "INSERT OR REPLACE INTO system_settings (key, value) VALUES (?, ?)",
+        (key, value),
+        commit=True
+    )

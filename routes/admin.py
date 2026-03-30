@@ -2,6 +2,7 @@
 NOC Portal — Admin routes
 Blueprint name: 'admin'   prefix: /admin
 """
+
 import csv, io
 from datetime import date, datetime, timedelta
 from flask import (Blueprint, render_template, redirect, url_for,
@@ -258,6 +259,25 @@ def add_user():
     flash(f'Account for {name} ({role}) created successfully.', 'success')
     return redirect(url_for('admin.users'))
 
+@admin_bp.route('/force-reverify', methods=['POST'])
+@login_required
+def force_reverify_users():
+    from flask import request, redirect, url_for, flash
+    from models.models import User
+    # safety check
+    user = current_user()
+
+    if user['role'] != 'admin':
+        flash("Unauthorized action", "error")
+        return redirect(url_for('admin.users'))
+    user_ids = request.form.getlist('user_ids')
+    try:
+        user_ids = [int(uid) for uid in user_ids]
+    except:
+        user_ids = []
+    User.force_reverify(user_ids)
+    flash("Selected users marked for re-verification", "success")
+    return redirect(url_for('admin.users'))
 
 @admin_bp.route('/user/<int:uid>/toggle', methods=['POST'])
 @login_required
@@ -327,13 +347,41 @@ def delete_user(uid):
 @login_required
 @role_required('admin')
 def profile():
+    from utils.helpers import get_setting
     stats = dict(
         total_apps  = db_query("SELECT COUNT(*) AS c FROM applications", one=True)['c'],
         total_users = db_query("SELECT COUNT(*) AS c FROM users WHERE role != 'admin'", one=True)['c'],
         students    = db_query("SELECT COUNT(*) AS c FROM users WHERE role='student'", one=True)['c'],
         hods        = db_query("SELECT COUNT(*) AS c FROM users WHERE role='hod'", one=True)['c'],
     )
-    return render_template('admin/profile.html', stats=stats)
+    hod_code   = get_setting('HOD_SECRET')
+    admin_code = get_setting('ADMIN_SECRET')
+    return render_template('admin/profile.html', stats=stats,
+                           hod_code=hod_code, admin_code=admin_code)
+
+
+@admin_bp.route('/update-codes', methods=['POST'])
+@login_required
+def update_codes():
+    user = current_user()
+    if user['role'] != 'admin':
+        flash("Unauthorized", "error")
+        return redirect(url_for('admin.profile'))
+
+    hod_code   = request.form.get('hod_code', '').strip()
+    admin_code = request.form.get('admin_code', '').strip()
+
+    if not hod_code or not admin_code:
+        flash("Codes cannot be empty", "error")
+        return redirect(url_for('admin.profile'))
+
+    from utils.helpers import set_setting
+    set_setting('HOD_SECRET', hod_code)
+    set_setting('ADMIN_SECRET', admin_code)
+
+    log_action('UPDATE_REG_CODES', details='Admin updated HOD and Admin registration codes')
+    flash("Registration codes updated successfully", "success")
+    return redirect(url_for('admin.profile'))
 
 
 @admin_bp.route('/change-password', methods=['POST'])

@@ -333,8 +333,10 @@ class UserService:
         errors_dict is empty on success.
         """
         from flask import current_app
-        HOD_SECRET   = current_app.config['HOD_SECRET']
-        ADMIN_SECRET = current_app.config['ADMIN_SECRET']
+        from utils.helpers import get_setting
+
+        HOD_SECRET = get_setting('HOD_SECRET')
+        ADMIN_SECRET = get_setting('ADMIN_SECRET')
 
         name   = form.get('name', '')
         email  = form.get('email', '').lower()

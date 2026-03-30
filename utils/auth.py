@@ -26,13 +26,18 @@ def log_action(action, entity_type=None, entity_id=None, details=None):
 
 
 def login_required(f):
-    """Decorator: redirect to login if user is not authenticated."""
+    """Decorator: ensure user is authenticated and verified."""
     @functools.wraps(f)
     def decorated(*args, **kwargs):
-        if not current_user():
+        user = current_user()
+        # Not logged in
+        if not user:
             session.clear()
             flash('Please log in to continue.', 'info')
             return redirect(url_for('auth.login'))
+        # HARD BLOCK (reverification required)
+        if user.get('verification_required') == 1 and request.endpoint not in ['auth.reverify', 'auth.logout']:
+            return redirect(url_for('auth.reverify'))
         return f(*args, **kwargs)
     return decorated
 

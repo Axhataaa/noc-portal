@@ -57,15 +57,24 @@
 </div>
 
 <div class="card">
+
+    <form method="POST" action="{{ url_for('admin.force_reverify_users') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
     <div class="card-header">
         <h2 class="card-title">All Registered Users</h2>
         <span class="badge-count">{{ users|length }}</span>
-    </div>
 
+        <button type="submit" class="btn-danger" style="margin-left:auto;">
+            Force Re-Verification
+        </button>
+    </div>
+    
     <div class="table-container">
         <table class="data-table">
             <thead>
                 <tr>
+                    <th><input type="checkbox" onclick="toggleAll(this)"></th>
                     <th>#</th>
                     <th>Name</th>
                     <th class="users-col-email">Email</th>
@@ -80,7 +89,15 @@
             <tbody>
                 {% for user in users %}
                 <tr class="table-row {% if not user.is_active %}row-inactive{% endif %}">
+
+                    <td>
+                        {% if user.role != 'student' and user.id != current_user.id %}
+                        <input type="checkbox" name="user_ids" value="{{ user.id }}">
+                        {% endif %}
+                    </td>
+
                     <td class="td-id">{{ user.id }}</td>
+                    
                     <td>
                         <div class="company-cell">
                             <div class="company-avatar {% if not user.is_active %}inactive-avatar{% endif %}">
@@ -106,7 +123,7 @@
                         {% if user.id != current_user.id %}
                         <!-- Toggle active/inactive -->
                         <form method="POST" action="{{ url_for('admin.toggle_user', uid=user.id) }}" style="display:inline;">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <button type="submit"
                                     class="btn-icon {% if user.is_active %}danger{% else %}approve{% endif %}"
                                     title="{{ 'Deactivate account' if user.is_active else 'Activate account' }}">
@@ -133,10 +150,13 @@
                         </div>
                     </td>
                 </tr>
+
+                
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    </form>
 </div>
 
 <!-- Hidden reset password forms -->
@@ -355,5 +375,11 @@ function submitReset(uid) {
     document.getElementById('reset-pwd-' + uid).value = pwd;
     document.getElementById('reset-form-' + uid).submit();
 }
+
+function toggleAll(source) {
+    const checkboxes = document.querySelectorAll('input[name="user_ids"]');
+    checkboxes.forEach(cb => cb.checked = source.checked);
+}
+
 </script>
 {% endblock %}

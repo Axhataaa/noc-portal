@@ -114,6 +114,17 @@ def init_db():
     db.commit()
 
     # Migrations: safely add new columns to existing databases
+    # system_settings table for dynamic config (registration codes, etc.)
+    db.executescript("""
+    CREATE TABLE IF NOT EXISTS system_settings (
+        key   TEXT PRIMARY KEY,
+        value TEXT
+    );
+    INSERT OR IGNORE INTO system_settings (key, value) VALUES ('HOD_SECRET',   'default_hod_code');
+    INSERT OR IGNORE INTO system_settings (key, value) VALUES ('ADMIN_SECRET', 'default_admin_code');
+    """)
+    db.commit()
+
     for migration_sql in [
         "ALTER TABLE users ADD COLUMN branch TEXT",
         "ALTER TABLE applications ADD COLUMN branch TEXT",
@@ -123,6 +134,9 @@ def init_db():
         "ALTER TABLE applications ADD COLUMN noc_id TEXT",
         "ALTER TABLE applications ADD COLUMN certificate_path TEXT",
         "ALTER TABLE applications ADD COLUMN approval_date TEXT",
+        "ALTER TABLE users ADD COLUMN verification_required INTEGER DEFAULT 0",
+        "ALTER TABLE users ADD COLUMN is_verified INTEGER DEFAULT 1",
+        "ALTER TABLE users ADD COLUMN last_verified_at TEXT",
     ]:
         try:
             db.execute(migration_sql)

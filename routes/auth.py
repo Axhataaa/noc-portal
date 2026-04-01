@@ -48,13 +48,6 @@ def login():
         elif not check_password_hash(row['password'], pwd):
             flash('Incorrect password. Please try again.', 'error')
         else:
-            # CHECK BEFORE LOGIN
-            if row['verification_required'] == 1:
-                session.clear()
-                session['temp_user_id'] = row['id']
-                return redirect(url_for('auth.reverify', msg=1))
-
-            # NORMAL LOGIN
             session.clear()
             session.permanent = True
             session['user_id'] = row['id']
@@ -68,68 +61,6 @@ def login():
     return render_template('auth/login.html')
 
 
-@auth_bp.route('/reverify', methods=['GET', 'POST'])
-def reverify():
-
-    if request.args.get('msg') and request.method == 'GET':
-        flash("Re-verification required", "warning")
-    
-    user = current_user()
-    user_id = None
-
-    # If already logged in (shouldn't normally happen)
-    if user:
-        user_id = user['id']
-    else:
-        user_id = session.get('temp_user_id')
-
-    if not user_id:
-        return redirect(url_for('auth.login'))
-
-    # Attempt limit: max 3 failed reverify attempts
-    attempts = session.get('reverify_attempts', 0)
-    if attempts >= 3:
-        flash("Too many failed attempts. Try again later.", "error")
-        session.clear()
-        return redirect(url_for('auth.login'))
-
-    if request.method == 'POST':
-        code = request.form.get('code', '').strip()
-
-        from utils.helpers import get_setting
-        HOD_CODE   = get_setting('HOD_SECRET')
-        ADMIN_CODE = get_setting('ADMIN_SECRET')
-
-        row = db_query("SELECT * FROM users WHERE id=?", (user_id,), one=True)
-
-        valid = False
-        if row['role'] == 'hod' and code == HOD_CODE:
-            valid = True
-        elif row['role'] == 'admin' and code == ADMIN_CODE:
-            valid = True
-
-        if valid:
-            from datetime import datetime
-            db_query(
-                "UPDATE users SET verification_required=0, is_verified=1, last_verified_at=? WHERE id=?",
-                (datetime.now().isoformat(), user_id),
-                commit=True
-            )
-
-            session.pop('reverify_attempts', None)
-            session.clear()
-            session['user_id'] = user_id
-            session.permanent = True
-
-            flash("Re-verification successful", "success")
-            return redirect(url_for('auth.dashboard_redirect'))
-
-        session['reverify_attempts'] = session.get('reverify_attempts', 0) + 1
-        flash("Invalid code", "error")
-
-    return render_template('auth/reverify.html')
-
-
 # ── Register ──────────────────────────────────────────
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
@@ -138,9 +69,8 @@ def register():
         return redirect(url_for('auth.dashboard_redirect'))
 
     cfg          = current_app.config
-    from utils.helpers import get_setting
-    HOD_SECRET = get_setting('HOD_SECRET')
-    ADMIN_SECRET = get_setting('ADMIN_SECRET')
+    HOD_SECRET   = cfg['HOD_SECRET']
+    ADMIN_SECRET = cfg['ADMIN_SECRET']
     BRANCH_TO_DEPT = cfg['BRANCH_TO_DEPT']
 
     if request.method == 'POST':
@@ -298,9 +228,8 @@ def google_complete():
 
     cfg            = current_app.config
     BRANCH_TO_DEPT = cfg['BRANCH_TO_DEPT']
-    from utils.helpers import get_setting
-    HOD_SECRET     = get_setting('HOD_SECRET') 
-    ADMIN_SECRET   = get_setting('ADMIN_SECRET') 
+    HOD_SECRET     = cfg['HOD_SECRET']
+    ADMIN_SECRET   = cfg['ADMIN_SECRET']
 
     if request.method == 'POST':
         form       = {k: v.strip() for k, v in request.form.items()}

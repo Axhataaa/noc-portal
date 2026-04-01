@@ -62,7 +62,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
   background: var(--bg-base);
   color: var(--text-primary);
@@ -73,9 +73,10 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.2;
+  letter-spacing: -0.018em;
 }
 
 a { color: var(--color-accent); text-decoration: none; }
@@ -141,7 +142,7 @@ a:hover { color: var(--text-primary); }
 }
 
 .logo-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 800;
   font-size: 0.95rem;
   color: var(--text-primary);
@@ -181,7 +182,7 @@ a:hover { color: var(--text-primary); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
   font-size: 0.95rem;
   flex-shrink: 0;
@@ -418,7 +419,6 @@ a:hover { color: var(--text-primary); }
   cursor: pointer;
   text-decoration: none;
   transition: all 0.18s ease;
-  font-family: 'Outfit', sans-serif;
   white-space: nowrap;
 }
 
@@ -550,9 +550,9 @@ a:hover { color: var(--text-primary); }
 .stat-info { display: flex; flex-direction: column; }
 
 .stat-value {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   line-height: 1;
 }
@@ -685,7 +685,6 @@ a:hover { color: var(--text-primary); }
   outline: none;
   color: var(--text-primary);
   font-size: 0.83rem;
-  font-family: 'Outfit', sans-serif;
 }
 
 .search-input::placeholder { color: var(--text-muted); }
@@ -723,7 +722,6 @@ a:hover { color: var(--text-primary); }
   padding: 0.65rem 0.9rem;
   color: var(--text-primary);
   font-size: 0.85rem;
-  font-family: 'Outfit', sans-serif;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   outline: none;
   appearance: none;
@@ -1344,9 +1342,9 @@ a:hover { color: var(--text-primary); }
 
 /* Hero Title — Playfair Display for elegance */
 .lp-hero-title {
-  font-family: 'Playfair Display', 'Georgia', serif;
-  font-size: clamp(2.6rem, 5vw, 3.8rem);
-  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
   line-height: 1.15;
   color: var(--text-primary);
   margin-bottom: 1.25rem;
@@ -1377,7 +1375,7 @@ a:hover { color: var(--text-primary); }
   border-radius: 10px; text-decoration: none;
   box-shadow: 0 3px 14px rgba(59,130,246,0.4);
   transition: all 0.2s;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 .lp-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(59,130,246,0.5); color: #fff; }
 
@@ -1388,7 +1386,7 @@ a:hover { color: var(--text-primary); }
   color: var(--text-secondary); font-weight: 600; font-size: 0.88rem;
   border-radius: 10px; text-decoration: none;
   transition: all 0.18s;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 .lp-btn-outline:hover { border-color: var(--color-accent); color: var(--color-accent); background: rgba(59,130,246,0.05); }
 
@@ -1448,7 +1446,7 @@ a:hover { color: var(--text-primary); }
 .mc-stat.approved { border-color: rgba(34,197,94,0.2); }
 .mc-stat.pending  { border-color: rgba(245,158,11,0.2); }
 .mcs-n {
-  display: block; font-family: 'Cormorant Garamond', serif;
+  display: block; font-family: 'Inter', system-ui, sans-serif;
   font-size: 1.1rem; font-weight: 800; color: var(--text-primary);
 }
 .mc-stat.approved .mcs-n { color: var(--color-approved); }
@@ -1485,9 +1483,9 @@ a:hover { color: var(--text-primary); }
   margin-bottom: 0.6rem;
 }
 .lp-section-title {
-  font-family: 'Playfair Display', 'Georgia', serif;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700; margin-bottom: 3rem;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-weight: 800; margin-bottom: 3rem;
+  letter-spacing: -0.02em;
   color: var(--text-primary); letter-spacing: -0.02em;
 }
 
@@ -1502,8 +1500,8 @@ a:hover { color: var(--text-primary); }
 .step-item:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-4px); }
 
 .step-num {
-  font-family: 'Playfair Display', serif; font-size: 2.5rem;
-  font-weight: 700; color: rgba(59,130,246,0.15); line-height: 1;
+  font-size: 2.2rem;
+  font-weight: 800; color: rgba(59,130,246,0.15); line-height: 1;
   margin-bottom: 0.75rem; letter-spacing: -0.03em;
 }
 .step-icon {
@@ -1554,7 +1552,7 @@ a:hover { color: var(--text-primary); }
 .lp-hod     .lrc-tag { color: #22d3ee; }
 .lp-admin   .lrc-tag { color: #fbbf24; }
 
-.lp-role-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 0.5rem; }
+.lp-role-card h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 0.5rem; }
 .lp-role-card p  { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem; }
 .lrc-link { font-size: 0.8rem; font-weight: 700; color: var(--color-accent); text-decoration: none; }
 .lrc-link:hover { text-decoration: underline; }
@@ -1748,9 +1746,9 @@ a:hover { color: var(--text-primary); }
 
 .error-content {}
 .error-code {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 6rem;
+  font-size: 5rem;
   font-weight: 800;
+  letter-spacing: -0.03em;
   background: var(--grad-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1798,7 +1796,7 @@ a:hover { color: var(--text-primary); }
     text-decoration: none;
     cursor: pointer;
     transition: all 0.18s ease;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     width: 100%;
     box-sizing: border-box;
 }

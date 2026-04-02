@@ -43,7 +43,7 @@ run.bat
 | Role     | Email           | Password   |
 | -------- | --------------- | ---------- |
 | Admin    | admin@noc.edu   | admin123   |
-| HOD (IT) | hod.cs@noc.edu  | hod123     |
+| HOD (IT) | hod.it@noc.edu  | hod123     |
 | Student  | student@noc.edu | student123 |
 
 ---

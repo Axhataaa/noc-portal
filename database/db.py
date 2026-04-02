@@ -150,38 +150,49 @@ def init_db():
 def _seed_demo(db):
     """Populate demo users and applications (runs only on empty database)."""
     if db.execute("SELECT 1 FROM users LIMIT 1").fetchone():
-        return  # Already seeded
+        return
 
     ph = generate_password_hash
+
     users = [
-        ('System Admin', 'admin@noc.edu',    ph('admin123'),   'admin',   'Administration',                    '',                                              ''),
-        ('Dr. Sharma',   'hod.it@noc.edu',   ph('hod123'),     'hod',     'Information Technology',            '',                                              ''),
-        ('Dr. Patel',    'hod.ec@noc.edu',   ph('hod123'),     'hod',     'Electronics',                       '',                                              ''),
-        ('Arjun Mehta',  'arjun@noc.edu',    ph('student123'), 'student', 'Computer Science',                  'Computer Science and Engineering',              'CS2021001'),
-        ('Priya Singh',  'priya@noc.edu',    ph('student123'), 'student', 'Computer Science',                  'Computer Science and Design',                   'CS2021002'),
-        ('Rahul Verma',  'rahul@noc.edu',    ph('student123'), 'student', 'Electronics',                       'Electronics and Telecommunication Engineering', 'EC2021001'),
-        ('Sneha Gupta',  'sneha@noc.edu',    ph('student123'), 'student', 'Center of Artificial Intelligence', 'Artificial Intelligence and Machine Learning',  'CS2021003'),
-        ('Amit Kumar',   'amit@noc.edu',     ph('student123'), 'student', 'Mechanical Engineering',            'Mechanical Engineering',                        'ME2021001'),
+        ('System Admin', 'admin@noc.edu', ph('admin123'), 'admin', 'Administration', '', ''),
+        ('Dr. Sharma', 'hod.it@noc.edu', ph('hod123'), 'hod', 'Information Technology', '', ''),
+        ('Dr. Patel', 'hod.ec@noc.edu', ph('hod123'), 'hod', 'Electronics', '', ''),
+        ('Arjun Mehta', 'arjun@noc.edu', ph('student123'), 'student', 'Computer Science', 'Computer Science and Engineering', 'CS2021001'),
+        ('Priya Singh', 'priya@noc.edu', ph('student123'), 'student', 'Computer Science', 'Computer Science and Design', 'CS2021002'),
+        ('Rahul Verma', 'rahul@noc.edu', ph('student123'), 'student', 'Electronics', 'Electronics and Telecommunication Engineering', 'EC2021001'),
+        ('Sneha Gupta', 'sneha@noc.edu', ph('student123'), 'student', 'Center of Artificial Intelligence', 'Artificial Intelligence and Machine Learning', 'CS2021003'),
+        ('Amit Kumar', 'amit@noc.edu', ph('student123'), 'student', 'Mechanical Engineering', 'Mechanical Engineering', 'ME2021001'),
     ]
-    for name, email, pwd, role, dept, branch, enroll in users:
+
+    for user in users:
         db.execute(
             "INSERT INTO users(name,email,password,role,department,branch,enrollment) VALUES(?,?,?,?,?,?,?)",
-            (name, email, pwd, role, dept, branch, enroll)
+            user
         )
+
     db.commit()
 
-    hod_id = db.execute("SELECT id FROM users WHERE email='hod.cs@noc.edu'").fetchone()[0]
-    sid = {r[0]: r[1] for r in db.execute("SELECT email, id FROM users WHERE role='student'").fetchall()}
+    # Use correct existing HOD email
+    hod_id = db.execute(
+        "SELECT id FROM users WHERE email='hod.it@noc.edu'"
+    ).fetchone()[0]
+
+    # Student mapping
+    sid = {r[0]: r[1] for r in db.execute(
+        "SELECT email, id FROM users WHERE role='student'"
+    ).fetchall()}
 
     today = date.today()
-    now   = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    apps  = [
-        (sid['rishabh@noc.edu'], 'Google India',    'Software Engineering Intern', 'Computer Science', 'Bangalore', '₹50,000/month', 'Approved', 'Great opportunity.'),
-        (sid['shubhangini@noc.edu'], 'Infosys',          'Data Science Intern',         'Computer Science', 'Pune',      '₹25,000/month', 'Pending',  None),
-        (sid['gungun@noc.edu'], 'ISRO',             'Electronics Intern',          'Electronics',      'Ahmedabad', '₹15,000/month', 'Approved', 'Approved by HOD.'),
-        (sid['tanisha@noc.edu'], 'Microsoft',        'Cloud Intern',                'Computer Science', 'Hyderabad', '₹45,000/month', 'Pending',  None),
-        (sid['sarthak@noc.edu'],  'Tata Consultancy', 'Web Dev Intern',              'Mechanical',       'Mumbai',    '₹20,000/month', 'Rejected', 'Incomplete documentation.'),
-        (sid['rishabh@noc.edu'], 'Amazon',           'ML Intern',                   'Computer Science', 'Bangalore', '₹40,000/month', 'Approved', 'Strong profile.'),
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    apps = [
+        (sid['arjun@noc.edu'], 'Google India', 'Software Engineering Intern', 'Computer Science', 'Bangalore', '₹50,000/month', 'Approved', 'Great opportunity.'),
+        (sid['priya@noc.edu'], 'Infosys', 'Data Science Intern', 'Computer Science', 'Pune', '₹25,000/month', 'Pending', None),
+        (sid['rahul@noc.edu'], 'ISRO', 'Electronics Intern', 'Electronics', 'Ahmedabad', '₹15,000/month', 'Approved', 'Approved by HOD.'),
+        (sid['sneha@noc.edu'], 'Microsoft', 'Cloud Intern', 'Computer Science', 'Hyderabad', '₹45,000/month', 'Pending', None),
+        (sid['amit@noc.edu'], 'Tata Consultancy', 'Web Dev Intern', 'Mechanical', 'Mumbai', '₹20,000/month', 'Rejected', 'Incomplete documentation.'),
+        (sid['arjun@noc.edu'], 'Amazon', 'ML Intern', 'Computer Science', 'Bangalore', '₹40,000/month', 'Approved', 'Strong profile.'),
     ]
     for i, (sid_, company, role, dept, loc, stipend, status, remarks) in enumerate(apps):
         start  = (today + timedelta(days=30 + i * 7)).strftime('%Y-%m-%d')

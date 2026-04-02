@@ -155,7 +155,7 @@ def _seed_demo(db):
     ph = generate_password_hash
     users = [
         ('System Admin', 'admin@noc.edu',    ph('admin123'),   'admin',   'Administration',                    '',                                              ''),
-        ('Dr. Sharma',   'hod.cs@noc.edu',   ph('hod123'),     'hod',     'Computer Science',                  '',                                              ''),
+        ('Dr. Sharma',   'hod.it@noc.edu',   ph('hod123'),     'hod',     'Information Technology',            '',                                              ''),
         ('Dr. Patel',    'hod.ec@noc.edu',   ph('hod123'),     'hod',     'Electronics',                       '',                                              ''),
         ('Arjun Mehta',  'arjun@noc.edu',    ph('student123'), 'student', 'Computer Science',                  'Computer Science and Engineering',              'CS2021001'),
         ('Priya Singh',  'priya@noc.edu',    ph('student123'), 'student', 'Computer Science',                  'Computer Science and Design',                   'CS2021002'),
@@ -176,12 +176,12 @@ def _seed_demo(db):
     today = date.today()
     now   = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     apps  = [
-        (sid['arjun@noc.edu'], 'Google India',    'Software Engineering Intern', 'Computer Science', 'Bangalore', '₹50,000/month', 'Approved', 'Great opportunity.'),
-        (sid['priya@noc.edu'], 'Infosys',          'Data Science Intern',         'Computer Science', 'Pune',      '₹25,000/month', 'Pending',  None),
-        (sid['rahul@noc.edu'], 'ISRO',             'Electronics Intern',          'Electronics',      'Ahmedabad', '₹15,000/month', 'Approved', 'Approved by HOD.'),
-        (sid['sneha@noc.edu'], 'Microsoft',        'Cloud Intern',                'Computer Science', 'Hyderabad', '₹45,000/month', 'Pending',  None),
-        (sid['amit@noc.edu'],  'Tata Consultancy', 'Web Dev Intern',              'Mechanical',       'Mumbai',    '₹20,000/month', 'Rejected', 'Incomplete documentation.'),
-        (sid['arjun@noc.edu'], 'Amazon',           'ML Intern',                   'Computer Science', 'Bangalore', '₹40,000/month', 'Approved', 'Strong profile.'),
+        (sid['rishabh@noc.edu'], 'Google India',    'Software Engineering Intern', 'Computer Science', 'Bangalore', '₹50,000/month', 'Approved', 'Great opportunity.'),
+        (sid['shubhangini@noc.edu'], 'Infosys',          'Data Science Intern',         'Computer Science', 'Pune',      '₹25,000/month', 'Pending',  None),
+        (sid['gungun@noc.edu'], 'ISRO',             'Electronics Intern',          'Electronics',      'Ahmedabad', '₹15,000/month', 'Approved', 'Approved by HOD.'),
+        (sid['tanisha@noc.edu'], 'Microsoft',        'Cloud Intern',                'Computer Science', 'Hyderabad', '₹45,000/month', 'Pending',  None),
+        (sid['sarthak@noc.edu'],  'Tata Consultancy', 'Web Dev Intern',              'Mechanical',       'Mumbai',    '₹20,000/month', 'Rejected', 'Incomplete documentation.'),
+        (sid['rishabh@noc.edu'], 'Amazon',           'ML Intern',                   'Computer Science', 'Bangalore', '₹40,000/month', 'Approved', 'Strong profile.'),
     ]
     for i, (sid_, company, role, dept, loc, stipend, status, remarks) in enumerate(apps):
         start  = (today + timedelta(days=30 + i * 7)).strftime('%Y-%m-%d')
